@@ -37,6 +37,7 @@ const Index = () => {
             onCellClick={wheel.onCellClick}
             selectionLimit={wheel.selectionLimit}
             openedCount={wheel.opened.length}
+            maskOpacity={maskOpacity}
           />
 
           <ColorAnalysis
