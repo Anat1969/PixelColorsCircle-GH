@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Music, Leaf, Atom, Heart, MessageCircle, Shield, Lightbulb } from "lucide-react";
 import { colorExplorationData, colorExplorationFunctions } from "@/data/colorExplorationData";
+import { colorExplorationLabels as labels } from "@/data/colorExplorationLabels";
 
 const domainIcons: Record<string, typeof Music> = {
   music: Music,
