@@ -138,7 +138,7 @@ const ColorPsychology = () => {
                 <span className="text-xs font-bold" style={{ color: color.balancingColorHex }}>כרטיס לדוגמה</span>
                 <div className="h-6 rounded-md" style={{ backgroundColor: color.balancingColorHex, opacity: 0.8 }} />
               </div>
-              <span className="text-xs" style={{ color: 'hsl(var(--newton-muted))' }}>Combined</span>
+              <span className="text-xs" style={{ color: 'hsl(var(--newton-muted))' }}>משולב</span>
             </div>
           </div>
         </div>
