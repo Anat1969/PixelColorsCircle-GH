@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Music, Leaf, Atom, Heart, MessageCircle, Shield, Lightbulb } from "lucide-react";
 import { colorExplorationData, colorExplorationFunctions } from "@/data/colorExplorationData";
+import { colorExplorationLabels as labels } from "@/data/colorExplorationLabels";
 
 const domainIcons: Record<string, typeof Music> = {
   music: Music,
@@ -63,7 +64,7 @@ const HowColorsWork = () => {
         {/* Summary strip — 4 color functions */}
         <div className="newton-panel p-5">
           <h3 className="text-sm font-semibold mb-4" style={{ color: "hsl(var(--newton-muted))" }}>
-            ארבע הפונקציות של צבע
+            {labels.summaryTitle}
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {colorExplorationFunctions.map((f) => {
@@ -126,7 +127,7 @@ const HowColorsWork = () => {
                 }}
               >
                 <span className="text-xs" style={{ color: "hsl(var(--newton-muted))" }}>
-                  תמונה
+                  {labels.imagePlaceholder}
                 </span>
               </div>
 
@@ -150,7 +151,7 @@ const HowColorsWork = () => {
               >
                 <div className="flex items-center gap-2">
                   <span className="text-[11px]" style={{ color: "hsl(var(--newton-muted))" }}>
-                    צבעים:
+                    {labels.colorsTitle}:
                   </span>
                   <div className="flex gap-1.5">
                     {ex.colors.map((c) => (
