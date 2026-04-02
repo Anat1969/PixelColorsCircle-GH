@@ -20,8 +20,9 @@ const ColorPsychology = () => {
             {labels.pageTitle}
           </h1>
           <Link to="/" className="newton-action-btn text-sm gap-2">
-            <ArrowRight className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4" />
             גלגל הצבעים
+          </Link>
           </Link>
         </div>
 
