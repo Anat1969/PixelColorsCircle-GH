@@ -44,14 +44,16 @@ const ColorPsychology = () => {
               </div>
             ))}
           </div>
-          <Slider
-            min={0}
-            max={6}
-            step={1}
-            value={[index]}
-            onValueChange={([v]) => setIndex(v)}
-            className="w-full"
-          />
+          <div dir="ltr">
+            <Slider
+              min={0}
+              max={6}
+              step={1}
+              value={[index]}
+              onValueChange={([v]) => setIndex(v)}
+              className="w-full"
+            />
+          </div>
         </div>
 
         {/* Selected color info */}
