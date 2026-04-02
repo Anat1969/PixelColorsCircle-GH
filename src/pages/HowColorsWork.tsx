@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Music, Leaf, Atom } from "lucide-react";
+import EditableImageSlot from "@/components/EditableImageSlot";
 import { colorExplorationData, colorExplorationFunctions } from "@/data/colorExplorationData";
 import { colorExplorationLabels as labels } from "@/data/colorExplorationLabels";
 import bannerMusic from "@/assets/banner_music.jpg";
