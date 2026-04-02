@@ -53,6 +53,7 @@ const Index = () => {
             decomposition={wheel.decomposition}
           />
         </main>
+        </div>
       </div>
     </div>
   );
