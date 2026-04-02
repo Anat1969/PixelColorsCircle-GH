@@ -23,7 +23,6 @@ const ColorPsychology = () => {
             <ArrowLeft className="w-4 h-4" />
             גלגל הצבעים
           </Link>
-          </Link>
         </div>
 
         {/* Slider */}
