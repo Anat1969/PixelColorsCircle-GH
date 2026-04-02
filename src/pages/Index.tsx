@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useColorWheel } from '@/hooks/useColorWheel';
 import ColorWheel from '@/components/ColorWheel';
 import WheelControls from '@/components/WheelControls';
@@ -5,6 +6,7 @@ import ColorAnalysis from '@/components/ColorAnalysis';
 
 const Index = () => {
   const wheel = useColorWheel();
+  const [maskOpacity, setMaskOpacity] = useState(72);
 
   return (
     <div dir="rtl" className="newton-app min-h-screen"
