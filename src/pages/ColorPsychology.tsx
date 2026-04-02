@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { colorPsychologyData } from '@/data/colorPsychologyData';
 import { colorPsychologyLabels as labels } from '@/data/colorPsychologyLabels';
-import { ArrowRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 
 const ColorPsychology = () => {
