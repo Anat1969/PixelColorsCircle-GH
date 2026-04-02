@@ -18,6 +18,7 @@ const Index = () => {
           openedCount={wheel.opened.length}
           structureName={wheel.structureName}
           historyLength={wheel.history.length}
+          maskOpacity={maskOpacity}
           onChangeLimit={wheel.changeLimit}
           onSetMode={wheel.setMode}
           onRotateForward={wheel.rotateForward}
@@ -25,6 +26,7 @@ const Index = () => {
           onReset={wheel.resetHoles}
           onNewPattern={wheel.newPattern}
           onUndo={wheel.undo}
+          onMaskOpacityChange={setMaskOpacity}
         />
 
         <main className="newton-panel p-4 space-y-4">
