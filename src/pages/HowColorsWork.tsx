@@ -64,7 +64,7 @@ const HowColorsWork = () => {
         {/* Summary strip — 4 color functions */}
         <div className="newton-panel p-5">
           <h3 className="text-sm font-semibold mb-4" style={{ color: "hsl(var(--newton-muted))" }}>
-            ארבע הפונקציות של צבע
+            {labels.summaryTitle}
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {colorExplorationFunctions.map((f) => {
