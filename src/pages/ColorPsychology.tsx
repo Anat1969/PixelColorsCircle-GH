@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { colorPsychologyData } from '@/data/colorPsychologyData';
 import { colorPsychologyLabels as labels } from '@/data/colorPsychologyLabels';
-import { ArrowRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 
 const ColorPsychology = () => {
@@ -20,7 +20,7 @@ const ColorPsychology = () => {
             {labels.pageTitle}
           </h1>
           <Link to="/" className="newton-action-btn text-sm gap-2">
-            <ArrowRight className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4" />
             גלגל הצבעים
           </Link>
         </div>
@@ -44,14 +44,16 @@ const ColorPsychology = () => {
               </div>
             ))}
           </div>
-          <Slider
-            min={0}
-            max={6}
-            step={1}
-            value={[index]}
-            onValueChange={([v]) => setIndex(v)}
-            className="w-full"
-          />
+          <div dir="ltr">
+            <Slider
+              min={0}
+              max={6}
+              step={1}
+              value={[index]}
+              onValueChange={([v]) => setIndex(v)}
+              className="w-full"
+            />
+          </div>
         </div>
 
         {/* Selected color info */}
