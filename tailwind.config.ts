@@ -47,6 +47,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        newton: {
+          bg: "hsl(var(--newton-bg))",
+          panel: "hsl(var(--newton-panel))",
+          "panel-2": "hsl(var(--newton-panel-2))",
+          text: "hsl(var(--newton-text))",
+          muted: "hsl(var(--newton-muted))",
+          accent: "hsl(var(--newton-accent))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
