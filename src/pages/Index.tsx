@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useColorWheel } from '@/hooks/useColorWheel';
 import ColorWheel from '@/components/ColorWheel';
 import WheelControls from '@/components/WheelControls';
@@ -11,7 +12,13 @@ const Index = () => {
   return (
     <div dir="rtl" className="newton-app min-h-screen"
       style={{ background: 'radial-gradient(circle at top, #1d2230 0%, #0f1115 45%, #0b0d11 100%)' }}>
-      <div className="max-w-[1380px] mx-auto p-6 grid grid-cols-1 lg:grid-cols-[minmax(340px,460px)_1fr] gap-6 items-start">
+      <div className="max-w-[1380px] mx-auto p-6 space-y-4">
+        <div className="flex justify-end">
+          <Link to="/color-psychology" className="newton-action-btn text-sm">
+            פסיכולוגיית צבעים
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(340px,460px)_1fr] gap-6 items-start">
         <WheelControls
           selectionLimit={wheel.selectionLimit}
           mode={wheel.mode}
@@ -46,6 +53,7 @@ const Index = () => {
             decomposition={wheel.decomposition}
           />
         </main>
+        </div>
       </div>
     </div>
   );
