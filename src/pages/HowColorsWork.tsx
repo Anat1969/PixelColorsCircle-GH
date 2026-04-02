@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Music, Leaf, Atom } from "lucide-react";
+import EditableImageSlot from "@/components/EditableImageSlot";
 import { colorExplorationData, colorExplorationFunctions } from "@/data/colorExplorationData";
 import { colorExplorationLabels as labels } from "@/data/colorExplorationLabels";
 import bannerMusic from "@/assets/banner_music.jpg";
@@ -119,18 +120,11 @@ const HowColorsWork = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-2">
                     {domain.examples.map((ex) => (
                       <div key={ex.id} className="newton-panel p-5 space-y-3 flex flex-col">
-                        {/* Gradient placeholder */}
-                        <div
-                          className="h-28 rounded-xl flex items-center justify-center"
-                          style={{
-                            background: `linear-gradient(135deg, ${ex.colors[0]}44, ${ex.colors[1] ?? ex.colors[0]}22)`,
-                            border: "1px solid rgba(255,255,255,0.06)",
-                          }}
-                        >
-                          <span className="text-xs" style={{ color: "hsl(var(--newton-muted))" }}>
-                            {labels.imagePlaceholder}
-                          </span>
-                        </div>
+                        <EditableImageSlot
+                          storageKey={ex.id}
+                          fallbackGradient={`linear-gradient(135deg, ${ex.colors[0]}44, ${ex.colors[1] ?? ex.colors[0]}22)`}
+                          className="h-28"
+                        />
 
                         <div className="space-y-1.5 flex-1">
                           <h3 className="text-sm font-bold" style={{ color: "hsl(var(--newton-text))" }}>
