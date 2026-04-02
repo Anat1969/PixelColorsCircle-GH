@@ -98,6 +98,21 @@ const WheelControls: React.FC<WheelControlsProps> = ({
         )}
       </Section>
 
+      {/* Mask opacity */}
+      <Section label={`שקיפות מסכה: ${maskOpacity}%`}>
+        <Slider
+          value={[maskOpacity]}
+          onValueChange={([v]) => onMaskOpacityChange(v)}
+          min={0}
+          max={100}
+          step={1}
+          className="w-full"
+        />
+        <p className="text-sm text-newton-muted leading-relaxed mt-2.5">
+          הורדת השקיפות חושפת את הצבעים מתחת למסכה ומאפשרת לראות ניגודיות בין הבחירות.
+        </p>
+      </Section>
+
       {/* Status */}
       <Section label="">
         <div className="space-y-2.5">
