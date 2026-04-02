@@ -1,6 +1,6 @@
 import React from 'react';
 import { RotateCcw, RotateCw, RefreshCw, Sparkles, Undo2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
 import {
   NEWTON_SEVEN, MODE_DESCRIPTIONS, type SelectionMode,
 } from '@/hooks/useColorWheel';
@@ -11,6 +11,7 @@ interface WheelControlsProps {
   openedCount: number;
   structureName: string;
   historyLength: number;
+  maskOpacity: number;
   onChangeLimit: (n: number) => void;
   onSetMode: (m: SelectionMode) => void;
   onRotateForward: () => void;
@@ -18,6 +19,7 @@ interface WheelControlsProps {
   onReset: () => void;
   onNewPattern: () => void;
   onUndo: () => void;
+  onMaskOpacityChange: (v: number) => void;
 }
 
 const modes: { key: SelectionMode; label: string }[] = [
@@ -28,8 +30,8 @@ const modes: { key: SelectionMode; label: string }[] = [
 ];
 
 const WheelControls: React.FC<WheelControlsProps> = ({
-  selectionLimit, mode, openedCount, structureName, historyLength,
-  onChangeLimit, onSetMode, onRotateForward, onRotateBack, onReset, onNewPattern, onUndo,
+  selectionLimit, mode, openedCount, structureName, historyLength, maskOpacity,
+  onChangeLimit, onSetMode, onRotateForward, onRotateBack, onReset, onNewPattern, onUndo, onMaskOpacityChange,
 }) => {
   return (
     <aside className="newton-panel p-5 lg:sticky lg:top-5 space-y-0">
@@ -94,6 +96,21 @@ const WheelControls: React.FC<WheelControlsProps> = ({
             <Undo2 className="inline w-4 h-4 ml-1" /> ביטול פעולה אחרונה
           </button>
         )}
+      </Section>
+
+      {/* Mask opacity */}
+      <Section label={`שקיפות מסכה: ${maskOpacity}%`}>
+        <Slider
+          value={[maskOpacity]}
+          onValueChange={([v]) => onMaskOpacityChange(v)}
+          min={0}
+          max={100}
+          step={1}
+          className="w-full"
+        />
+        <p className="text-sm text-newton-muted leading-relaxed mt-2.5">
+          הורדת השקיפות חושפת את הצבעים מתחת למסכה ומאפשרת לראות ניגודיות בין הבחירות.
+        </p>
       </Section>
 
       {/* Status */}

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useColorWheel } from '@/hooks/useColorWheel';
 import ColorWheel from '@/components/ColorWheel';
 import WheelControls from '@/components/WheelControls';
@@ -5,6 +6,7 @@ import ColorAnalysis from '@/components/ColorAnalysis';
 
 const Index = () => {
   const wheel = useColorWheel();
+  const [maskOpacity, setMaskOpacity] = useState(72);
 
   return (
     <div dir="rtl" className="newton-app min-h-screen"
@@ -16,6 +18,7 @@ const Index = () => {
           openedCount={wheel.opened.length}
           structureName={wheel.structureName}
           historyLength={wheel.history.length}
+          maskOpacity={maskOpacity}
           onChangeLimit={wheel.changeLimit}
           onSetMode={wheel.setMode}
           onRotateForward={wheel.rotateForward}
@@ -23,6 +26,7 @@ const Index = () => {
           onReset={wheel.resetHoles}
           onNewPattern={wheel.newPattern}
           onUndo={wheel.undo}
+          onMaskOpacityChange={setMaskOpacity}
         />
 
         <main className="newton-panel p-4 space-y-4">
@@ -33,6 +37,7 @@ const Index = () => {
             onCellClick={wheel.onCellClick}
             selectionLimit={wheel.selectionLimit}
             openedCount={wheel.opened.length}
+            maskOpacity={maskOpacity}
           />
 
           <ColorAnalysis

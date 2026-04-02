@@ -12,10 +12,11 @@ interface ColorWheelProps {
   onCellClick: (ring: number, sector: number) => void;
   selectionLimit: number;
   openedCount: number;
+  maskOpacity: number;
 }
 
 const ColorWheel: React.FC<ColorWheelProps> = ({
-  rotationOffset, isOpened, canSelectByMode, onCellClick, selectionLimit, openedCount,
+  rotationOffset, isOpened, canSelectByMode, onCellClick, selectionLimit, openedCount, maskOpacity,
 }) => {
   const baseCells = useMemo(() => {
     const cells: { key: string; d: string; fill: string }[] = [];
@@ -113,19 +114,21 @@ const ColorWheel: React.FC<ColorWheelProps> = ({
             const canSelect = canSelectByMode(cell.ring, cell.sector);
             const atLimit = openedCount >= selectionLimit;
             const dimmed = !open && atLimit ? true : (!open && !canSelect);
+            const baseOpacity = maskOpacity / 100;
+            const dimmedOpacity = Math.min(baseOpacity + 0.14, 1);
 
             return (
               <path
                 key={cell.key}
                 d={cell.d}
                 className="cursor-pointer transition-all duration-150"
-                fill={open ? 'rgba(0,0,0,0)' : dimmed ? 'rgba(0,0,0,0.72)' : 'rgba(0,0,0,0.58)'}
+                fill={open ? 'rgba(0,0,0,0)' : dimmed ? `rgba(0,0,0,${dimmedOpacity})` : `rgba(0,0,0,${baseOpacity})`}
                 onClick={() => onCellClick(cell.ring, cell.sector)}
                 onMouseEnter={(e) => {
-                  if (!open) (e.target as SVGPathElement).style.fill = 'rgba(0,0,0,0.42)';
+                  if (!open) (e.target as SVGPathElement).style.fill = `rgba(0,0,0,${Math.max(baseOpacity - 0.16, 0)})`;
                 }}
                 onMouseLeave={(e) => {
-                  if (!open) (e.target as SVGPathElement).style.fill = dimmed ? 'rgba(0,0,0,0.72)' : 'rgba(0,0,0,0.58)';
+                  if (!open) (e.target as SVGPathElement).style.fill = dimmed ? `rgba(0,0,0,${dimmedOpacity})` : `rgba(0,0,0,${baseOpacity})`;
                 }}
               >
                 <title>{sectorToNewtonName(cell.sector)} | טבעת {cell.ring + 1}</title>
