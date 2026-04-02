@@ -8,7 +8,7 @@ import {
   SNAP_THRESHOLD_THZ,
   type ColorPsychologyStop,
 } from '@/data/colorPsychologyData';
-import { colorPsychologyLabels as labels } from '@/data/colorPsychologyLabels';
+import { colorPsychologySpectrumLabels as labels } from '@/data/colorPsychologyLabels';
 import TopNav from '@/components/TopNav';
 
 const { stops, spectrumZones } = colorPsychologySpectrumData;
