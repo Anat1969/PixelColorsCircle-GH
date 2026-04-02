@@ -16,7 +16,7 @@ interface ColorWheelProps {
 }
 
 const ColorWheel: React.FC<ColorWheelProps> = ({
-  rotationOffset, isOpened, canSelectByMode, onCellClick, selectionLimit, openedCount,
+  rotationOffset, isOpened, canSelectByMode, onCellClick, selectionLimit, openedCount, maskOpacity,
 }) => {
   const baseCells = useMemo(() => {
     const cells: { key: string; d: string; fill: string }[] = [];
