@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft, Music, Leaf, Atom } from "lucide-react";
+import { Music, Leaf, Atom } from "lucide-react";
 import { colorExplorationData, colorExplorationFunctions } from "@/data/colorExplorationData";
 import { colorExplorationLabels as labels } from "@/data/colorExplorationLabels";
 import bannerMusic from "@/assets/banner_music.jpg";
 import bannerNature from "@/assets/banner_nature.jpg";
 import bannerPhysics from "@/assets/banner_physics.jpg";
+import TopNav from "@/components/TopNav";
 
 const domainIcons: Record<string, typeof Music> = {
   music: Music,
@@ -38,16 +38,13 @@ const HowColorsWork = () => {
         background: "radial-gradient(circle at top, #1d2230 0%, #0f1115 45%, #0b0d11 100%)",
       }}
     >
-      <div className="max-w-[960px] mx-auto p-6 space-y-8">
+      <TopNav />
+      <div className="max-w-[960px] mx-auto p-6 pt-20 space-y-8">
         {/* Header */}
         <div className="flex items-center justify-between">
           <h1 className="text-2xl md:text-3xl font-bold" style={{ color: "hsl(var(--newton-text))" }}>
             {hero.title}
           </h1>
-          <Link to="/" className="newton-action-btn text-sm gap-2">
-            <ArrowLeft className="w-4 h-4" />
-            גלגל הצבעים
-          </Link>
         </div>
 
         {/* Hero intro */}
