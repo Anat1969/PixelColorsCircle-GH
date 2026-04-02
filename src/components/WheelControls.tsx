@@ -1,6 +1,6 @@
 import React from 'react';
 import { RotateCcw, RotateCw, RefreshCw, Sparkles, Undo2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
 import {
   NEWTON_SEVEN, MODE_DESCRIPTIONS, type SelectionMode,
 } from '@/hooks/useColorWheel';
@@ -11,6 +11,7 @@ interface WheelControlsProps {
   openedCount: number;
   structureName: string;
   historyLength: number;
+  maskOpacity: number;
   onChangeLimit: (n: number) => void;
   onSetMode: (m: SelectionMode) => void;
   onRotateForward: () => void;
@@ -18,6 +19,7 @@ interface WheelControlsProps {
   onReset: () => void;
   onNewPattern: () => void;
   onUndo: () => void;
+  onMaskOpacityChange: (v: number) => void;
 }
 
 const modes: { key: SelectionMode; label: string }[] = [
