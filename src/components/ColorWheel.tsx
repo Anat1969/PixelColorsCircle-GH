@@ -12,6 +12,7 @@ interface ColorWheelProps {
   onCellClick: (ring: number, sector: number) => void;
   selectionLimit: number;
   openedCount: number;
+  maskOpacity: number;
 }
 
 const ColorWheel: React.FC<ColorWheelProps> = ({
