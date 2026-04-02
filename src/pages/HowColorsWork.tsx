@@ -151,7 +151,7 @@ const HowColorsWork = () => {
               >
                 <div className="flex items-center gap-2">
                   <span className="text-[11px]" style={{ color: "hsl(var(--newton-muted))" }}>
-                    צבעים:
+                    {labels.colorsTitle}:
                   </span>
                   <div className="flex gap-1.5">
                     {ex.colors.map((c) => (
