@@ -1,29 +1,29 @@
 import { useState, useMemo, useCallback } from 'react';
 import {
-  colorPsychologyData,
+  colorPsychologySpectrumData,
   SPECTRUM_MIN_THZ,
   SPECTRUM_MAX_THZ,
   VISIBLE_MIN_THZ,
   VISIBLE_MAX_THZ,
   SNAP_THRESHOLD_THZ,
-  type ColorPsychologyEntry,
+  type ColorPsychologyStop,
 } from '@/data/colorPsychologyData';
 import { colorPsychologyLabels as labels } from '@/data/colorPsychologyLabels';
 import TopNav from '@/components/TopNav';
 
+const { stops, spectrumZones } = colorPsychologySpectrumData;
+
 /** Convert THz to an approximate visible-spectrum hex color. */
 function thzToColor(thz: number): string {
   if (thz < VISIBLE_MIN_THZ || thz > VISIBLE_MAX_THZ) return 'transparent';
-  // Map THz to wavelength (nm) roughly: λ = c / f, but simplified linear mapping
-  const t = (thz - VISIBLE_MIN_THZ) / (VISIBLE_MAX_THZ - VISIBLE_MIN_THZ); // 0 = red, 1 = violet
-  // HSL hue: red=0, violet≈270
+  const t = (thz - VISIBLE_MIN_THZ) / (VISIBLE_MAX_THZ - VISIBLE_MIN_THZ);
   const hue = t * 270;
   return `hsl(${hue}, 90%, 50%)`;
 }
 
 /** Find nearest stop point within threshold. */
-function findSnappedStop(thz: number): ColorPsychologyEntry | null {
-  for (const entry of colorPsychologyData) {
+function findSnappedStop(thz: number): ColorPsychologyStop | null {
+  for (const entry of stops) {
     if (Math.abs(thz - entry.frequencyTHz) <= SNAP_THRESHOLD_THZ) {
       return entry;
     }
@@ -33,7 +33,6 @@ function findSnappedStop(thz: number): ColorPsychologyEntry | null {
 
 const ColorPsychology = () => {
   const [rawValue, setRawValue] = useState(SPECTRUM_MIN_THZ);
-  const [isDragging, setIsDragging] = useState(false);
 
   const snappedEntry = useMemo(() => findSnappedStop(rawValue), [rawValue]);
   const currentColor = useMemo(() => {
@@ -43,14 +42,13 @@ const ColorPsychology = () => {
 
   const isInVisible = rawValue >= VISIBLE_MIN_THZ && rawValue <= VISIBLE_MAX_THZ;
 
-  // Spectrum bar position percentages
   const irEndPct = ((VISIBLE_MIN_THZ - SPECTRUM_MIN_THZ) / (SPECTRUM_MAX_THZ - SPECTRUM_MIN_THZ)) * 100;
   const uvStartPct = ((VISIBLE_MAX_THZ - SPECTRUM_MIN_THZ) / (SPECTRUM_MAX_THZ - SPECTRUM_MIN_THZ)) * 100;
   const handlePct = ((rawValue - SPECTRUM_MIN_THZ) / (SPECTRUM_MAX_THZ - SPECTRUM_MIN_THZ)) * 100;
 
   const stopPositions = useMemo(
     () =>
-      colorPsychologyData.map((entry) => ({
+      stops.map((entry) => ({
         entry,
         pct: ((entry.frequencyTHz - SPECTRUM_MIN_THZ) / (SPECTRUM_MAX_THZ - SPECTRUM_MIN_THZ)) * 100,
       })),
@@ -85,7 +83,7 @@ const ColorPsychology = () => {
               style={{ width: `${irEndPct}%`, background: 'linear-gradient(to right, #1a0a0a, #3d0000)' }}
             >
               <span className="text-[10px] font-medium" style={{ color: 'hsl(var(--newton-muted))' }}>
-                {labels.infraredLabel}
+                {spectrumZones.infrared.label}
               </span>
             </div>
 
@@ -105,14 +103,14 @@ const ColorPsychology = () => {
               style={{ width: `${100 - uvStartPct}%`, background: 'linear-gradient(to right, #1a0033, #0a0015)' }}
             >
               <span className="text-[10px] font-medium" style={{ color: 'hsl(var(--newton-muted))' }}>
-                {labels.ultravioletLabel}
+                {spectrumZones.ultraviolet.label}
               </span>
             </div>
 
             {/* Stop point markers */}
             {stopPositions.map(({ entry, pct }) => (
               <div
-                key={entry.name}
+                key={entry.key}
                 className="absolute top-0 bottom-0 w-0.5 opacity-60"
                 style={{ left: `${pct}%`, backgroundColor: 'rgba(255,255,255,0.5)' }}
               />
@@ -130,7 +128,7 @@ const ColorPsychology = () => {
               }}
             />
 
-            {/* Invisible range input on top */}
+            {/* Invisible range input */}
             <input
               type="range"
               min={SPECTRUM_MIN_THZ}
@@ -138,25 +136,21 @@ const ColorPsychology = () => {
               step={1}
               value={rawValue}
               onChange={handleSliderChange}
-              onMouseDown={() => setIsDragging(true)}
-              onMouseUp={() => setIsDragging(false)}
-              onTouchStart={() => setIsDragging(true)}
-              onTouchEnd={() => setIsDragging(false)}
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
               style={{ direction: 'ltr' }}
             />
           </div>
 
-          {/* Color name markers below spectrum */}
+          {/* Color name markers */}
           <div className="relative h-6" style={{ direction: 'ltr' }}>
             {stopPositions.map(({ entry, pct }) => (
               <span
-                key={entry.name}
+                key={entry.key}
                 className="absolute text-[10px] -translate-x-1/2 transition-colors"
                 style={{
                   left: `${pct}%`,
-                  color: snappedEntry?.name === entry.name ? '#fff' : 'hsl(var(--newton-muted))',
-                  fontWeight: snappedEntry?.name === entry.name ? 700 : 400,
+                  color: snappedEntry?.key === entry.key ? '#fff' : 'hsl(var(--newton-muted))',
+                  fontWeight: snappedEntry?.key === entry.key ? 700 : 400,
                 }}
               >
                 {entry.name}
@@ -179,7 +173,7 @@ const ColorPsychology = () => {
             )}
             {!isInVisible && (
               <span className="text-xs" style={{ color: 'hsl(var(--newton-muted))' }}>
-                {rawValue < VISIBLE_MIN_THZ ? labels.infraredLabel : labels.ultravioletLabel}
+                {rawValue < VISIBLE_MIN_THZ ? spectrumZones.infrared.label : spectrumZones.ultraviolet.label}
               </span>
             )}
           </div>
@@ -205,40 +199,31 @@ const ColorPsychology = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="newton-panel p-6 space-y-5">
                 <Section title={labels.positiveTitle}>
-                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>
-                    {snappedEntry.positiveMeaning}
-                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>{snappedEntry.positiveMeaning}</p>
                 </Section>
                 <Section title={labels.negativeTitle}>
-                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>
-                    {snappedEntry.negativeMeaning}
-                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>{snappedEntry.negativeMeaning}</p>
                 </Section>
                 <Section title={labels.effectsTitle}>
-                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>
-                    {snappedEntry.effects}
-                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>{snappedEntry.effects}</p>
                 </Section>
               </div>
 
               <div className="newton-panel p-6 space-y-5">
                 <Section title={labels.balanceNeedTitle}>
-                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>
-                    {snappedEntry.balanceNeed}
-                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>{snappedEntry.needForBalance}</p>
                 </Section>
                 <Section title={labels.balanceReasonTitle}>
-                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>
-                    {snappedEntry.balanceReason}
-                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>{snappedEntry.whyBalanceIsNeeded}</p>
                 </Section>
                 <Section title={labels.balancingColorTitle}>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg shadow" style={{ backgroundColor: snappedEntry.balancingColorHex }} />
-                    <span className="text-sm font-medium" style={{ color: 'hsl(var(--newton-text))' }}>
-                      {snappedEntry.balancingColorName}
-                    </span>
+                    <span className="text-sm font-medium" style={{ color: 'hsl(var(--newton-text))' }}>{snappedEntry.balancingColorName}</span>
                   </div>
+                </Section>
+                <Section title={labels.balancingExplanationTitle}>
+                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>{snappedEntry.balancingExplanation}</p>
                 </Section>
               </div>
             </div>
@@ -247,25 +232,19 @@ const ColorPsychology = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="newton-panel p-6">
                 <Section title={labels.scientificTitle}>
-                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>
-                    {snappedEntry.scientificExplanation}
-                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>{snappedEntry.scientificExplanation}</p>
                 </Section>
               </div>
               <div className="newton-panel p-6">
                 <Section title={labels.psychologicalTitle}>
-                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>
-                    {snappedEntry.psychologicalExplanation}
-                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--newton-text))' }}>{snappedEntry.psychologicalExplanation}</p>
                 </Section>
               </div>
             </div>
 
             {/* Preview */}
             <div className="newton-panel p-6 space-y-4">
-              <h2 className="text-lg font-semibold" style={{ color: 'hsl(var(--newton-muted))' }}>
-                {labels.previewTitle}
-              </h2>
+              <h2 className="text-lg font-semibold" style={{ color: 'hsl(var(--newton-muted))' }}>{labels.previewTitle}</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="space-y-2 text-center">
                   <div className="h-24 rounded-xl" style={{ backgroundColor: snappedEntry.hex }} />
