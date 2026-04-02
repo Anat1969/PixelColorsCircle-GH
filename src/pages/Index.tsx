@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useColorWheel } from '@/hooks/useColorWheel';
 import ColorWheel from '@/components/ColorWheel';
 import WheelControls from '@/components/WheelControls';
 import ColorAnalysis from '@/components/ColorAnalysis';
+import TopNav from '@/components/TopNav';
 
 const Index = () => {
   const wheel = useColorWheel();
@@ -12,15 +12,8 @@ const Index = () => {
   return (
     <div dir="rtl" className="newton-app min-h-screen"
       style={{ background: 'radial-gradient(circle at top, #1d2230 0%, #0f1115 45%, #0b0d11 100%)' }}>
-      <div className="max-w-[1380px] mx-auto p-6 space-y-4">
-        <div className="flex justify-end gap-2">
-          <Link to="/color-psychology" className="newton-action-btn text-sm">
-            פסיכולוגיית צבעים
-          </Link>
-          <Link to="/how-colors-work" className="newton-action-btn text-sm">
-            איך צבעים עובדים
-          </Link>
-        </div>
+      <TopNav />
+      <div className="max-w-[1380px] mx-auto p-6 pt-20 space-y-4">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(340px,460px)_1fr] gap-6 items-start">
         <WheelControls
           selectionLimit={wheel.selectionLimit}
