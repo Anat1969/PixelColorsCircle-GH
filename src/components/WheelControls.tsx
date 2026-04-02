@@ -30,8 +30,8 @@ const modes: { key: SelectionMode; label: string }[] = [
 ];
 
 const WheelControls: React.FC<WheelControlsProps> = ({
-  selectionLimit, mode, openedCount, structureName, historyLength,
-  onChangeLimit, onSetMode, onRotateForward, onRotateBack, onReset, onNewPattern, onUndo,
+  selectionLimit, mode, openedCount, structureName, historyLength, maskOpacity,
+  onChangeLimit, onSetMode, onRotateForward, onRotateBack, onReset, onNewPattern, onUndo, onMaskOpacityChange,
 }) => {
   return (
     <aside className="newton-panel p-5 lg:sticky lg:top-5 space-y-0">
