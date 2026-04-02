@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { colorPsychologyData } from '@/data/colorPsychologyData';
 import { colorPsychologyLabels as labels } from '@/data/colorPsychologyLabels';
-import { ArrowLeft } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
+import TopNav from '@/components/TopNav';
 
 const ColorPsychology = () => {
   const [index, setIndex] = useState(0);
@@ -12,17 +11,14 @@ const ColorPsychology = () => {
   return (
     <div dir="rtl" className="newton-app min-h-screen"
       style={{ background: 'radial-gradient(circle at top, #1d2230 0%, #0f1115 45%, #0b0d11 100%)' }}>
-      <div className="max-w-[960px] mx-auto p-6 space-y-8">
+      <TopNav />
+      <div className="max-w-[960px] mx-auto p-6 pt-20 space-y-8">
 
         {/* Header */}
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold" style={{ color: 'hsl(var(--newton-text))' }}>
             {labels.pageTitle}
           </h1>
-          <Link to="/" className="newton-action-btn text-sm gap-2">
-            <ArrowLeft className="w-4 h-4" />
-            גלגל הצבעים
-          </Link>
         </div>
 
         {/* Slider */}
