@@ -127,7 +127,7 @@ const HowColorsWork = () => {
                 }}
               >
                 <span className="text-xs" style={{ color: "hsl(var(--newton-muted))" }}>
-                  תמונה
+                  {labels.imagePlaceholder}
                 </span>
               </div>
 
