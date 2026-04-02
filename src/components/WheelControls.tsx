@@ -126,20 +126,6 @@ const WheelControls: React.FC<WheelControlsProps> = ({
           </div>
         </div>
       </Section>
-
-      {/* Newton legend */}
-      <Section label="שבעת צבעי ניוטון">
-        <div className="grid grid-cols-2 gap-2">
-          {NEWTON_SEVEN.map(item => (
-            <div key={item.name} className="flex items-center gap-2.5 text-sm text-newton-muted p-2 rounded-xl"
-              style={{ background: 'rgba(255,255,255,0.03)' }}>
-              <span className="w-[18px] h-[18px] rounded-full flex-shrink-0 border border-white/25"
-                style={{ background: item.color }} />
-              <span>{item.name}</span>
-            </div>
-          ))}
-        </div>
-      </Section>
     </aside>
   );
 };
