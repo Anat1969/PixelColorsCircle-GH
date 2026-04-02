@@ -128,7 +128,7 @@ const ColorPsychology = () => {
                 <div className="flex-1" style={{ backgroundColor: color.hex }} />
                 <div className="flex-1" style={{ backgroundColor: color.balancingColorHex }} />
               </div>
-              <span className="text-xs" style={{ color: 'hsl(var(--newton-muted))' }}>Side by Side</span>
+              <span className="text-xs" style={{ color: 'hsl(var(--newton-muted))' }}>זה לצד זה</span>
             </div>
 
             {/* Sample card */}
