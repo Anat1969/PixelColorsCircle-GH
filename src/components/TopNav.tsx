@@ -2,9 +2,10 @@ import { NavLink } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 const navItems = [
+  { label: 'תורת הצבע', to: '/' },
   { label: 'פסיכולוגיית הצבעים', to: '/color-psychology' },
   { label: 'איך צבעים עובדים', to: '/how-colors-work' },
-  { label: 'גלגל הצבעים', to: '/' },
+  { label: 'גלגל הצבעים', to: '/wheel' },
 ];
 
 const TopNav = () => (
