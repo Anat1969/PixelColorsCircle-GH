@@ -1,79 +1,79 @@
 export const colorPsychologyData = [
   {
-    name: "Red",
+    name: "אדום",
     hex: "#E53935",
     frequencyTHz: "400–484",
-    positiveMeaning: "Energy, courage, passion, action, and strong presence.",
-    negativeMeaning: "Aggression, pressure, impulsiveness, and emotional overload.",
-    balancingColorName: "Green",
+    positiveMeaning: "אנרגיה, אומץ, תשוקה, פעולה ונוכחות חזקה.",
+    negativeMeaning: "תוקפנות, לחץ, אימפולסיביות ועומס רגשי.",
+    balancingColorName: "ירוק",
     balancingColorHex: "#43A047",
     balancingExplanation:
-      "Green balances red by adding calm, renewal, and emotional breathing space. This combination softens intensity without removing vitality."
+      "ירוק מאזן את האדום על ידי הוספת רוגע, התחדשות ומרחב נשימה רגשי. השילוב מרכך את העוצמה מבלי להסיר את החיוניות."
   },
   {
-    name: "Orange",
+    name: "כתום",
     hex: "#FB8C00",
     frequencyTHz: "484–508",
-    positiveMeaning: "Warmth, sociability, creativity, enthusiasm, and optimism.",
-    negativeMeaning: "Restlessness, superficiality, overstimulation, and lack of focus.",
-    balancingColorName: "Blue",
+    positiveMeaning: "חום, חברותיות, יצירתיות, התלהבות ואופטימיות.",
+    negativeMeaning: "חוסר מנוחה, שטחיות, גירוי יתר וחוסר מיקוד.",
+    balancingColorName: "כחול",
     balancingColorHex: "#1E88E5",
     balancingExplanation:
-      "Blue balances orange by adding clarity, structure, and calm. The pairing keeps warmth and creativity while reducing noise and excess."
+      "כחול מאזן את הכתום על ידי הוספת בהירות, מבנה ורוגע. השילוב שומר על חום ויצירתיות תוך הפחתת רעש ועודף."
   },
   {
-    name: "Yellow",
+    name: "צהוב",
     hex: "#FDD835",
     frequencyTHz: "508–526",
-    positiveMeaning: "Clarity, curiosity, learning, alertness, and optimism.",
-    negativeMeaning: "Anxiety, mental fatigue, criticism, and nervous tension.",
-    balancingColorName: "Violet",
+    positiveMeaning: "בהירות, סקרנות, למידה, ערנות ואופטימיות.",
+    negativeMeaning: "חרדה, עייפות מנטלית, ביקורתיות ומתח עצבני.",
+    balancingColorName: "סגול",
     balancingColorHex: "#8E24AA",
     balancingExplanation:
-      "Violet balances yellow by introducing depth, reflection, and emotional weight. This creates a more grounded and thoughtful combination."
+      "סגול מאזן את הצהוב על ידי הוספת עומק, רפלקציה ומשקל רגשי. זה יוצר שילוב מעוגן ומהורהר יותר."
   },
   {
-    name: "Green",
+    name: "ירוק",
     hex: "#43A047",
     frequencyTHz: "526–606",
-    positiveMeaning: "Balance, growth, healing, stability, and restoration.",
-    negativeMeaning: "Stagnation, passivity, emotional distance, and resistance to change.",
-    balancingColorName: "Red",
+    positiveMeaning: "איזון, צמיחה, ריפוי, יציבות והתחדשות.",
+    negativeMeaning: "קיפאון, פסיביות, ריחוק רגשי והתנגדות לשינוי.",
+    balancingColorName: "אדום",
     balancingColorHex: "#E53935",
     balancingExplanation:
-      "Red balances green by adding momentum, urgency, and activation. The result supports movement when green becomes too passive or static."
+      "אדום מאזן את הירוק על ידי הוספת מומנטום, דחיפות והפעלה. התוצאה תומכת בתנועה כאשר הירוק הופך פסיבי או סטטי מדי."
   },
   {
-    name: "Blue",
+    name: "כחול",
     hex: "#1E88E5",
     frequencyTHz: "606–668",
-    positiveMeaning: "Calm, trust, logic, clarity, and emotional regulation.",
-    negativeMeaning: "Coldness, detachment, rigidity, and over-control.",
-    balancingColorName: "Orange",
+    positiveMeaning: "רוגע, אמון, הגיון, בהירות וויסות רגשי.",
+    negativeMeaning: "קרירות, ניתוק, נוקשות ושליטת יתר.",
+    balancingColorName: "כתום",
     balancingColorHex: "#FB8C00",
     balancingExplanation:
-      "Orange balances blue by adding warmth, spontaneity, and human connection. This helps prevent the emotional distance blue can create."
+      "כתום מאזן את הכחול על ידי הוספת חום, ספונטניות וחיבור אנושי. זה עוזר למנוע את הריחוק הרגשי שכחול יכול ליצור."
   },
   {
-    name: "Indigo",
+    name: "אינדיגו",
     hex: "#3949AB",
     frequencyTHz: "668–700",
-    positiveMeaning: "Insight, intuition, depth, concentration, and inner perception.",
-    negativeMeaning: "Withdrawal, heaviness, overthinking, and isolation.",
-    balancingColorName: "Yellow",
+    positiveMeaning: "תובנה, אינטואיציה, עומק, ריכוז ותפיסה פנימית.",
+    negativeMeaning: "נסיגה, כבדות, חשיבת יתר ובידוד.",
+    balancingColorName: "צהוב",
     balancingColorHex: "#FDD835",
     balancingExplanation:
-      "Yellow balances indigo by adding lightness, mental openness, and visible energy. This helps lift indigo when it becomes too inward or dense."
+      "צהוב מאזן את האינדיגו על ידי הוספת קלילות, פתיחות מנטלית ואנרגיה גלויה. זה עוזר להרים את האינדיגו כשהוא הופך פנימי או צפוף מדי."
   },
   {
-    name: "Violet",
+    name: "סגול",
     hex: "#8E24AA",
     frequencyTHz: "700–789",
-    positiveMeaning: "Imagination, spirituality, transformation, sensitivity, and vision.",
-    negativeMeaning: "Escapism, emotional excess, confusion, and lack of grounding.",
-    balancingColorName: "Yellow",
+    positiveMeaning: "דמיון, רוחניות, טרנספורמציה, רגישות וחזון.",
+    negativeMeaning: "בריחה מהמציאות, עודף רגשי, בלבול וחוסר הארקה.",
+    balancingColorName: "צהוב",
     balancingColorHex: "#FDD835",
     balancingExplanation:
-      "Yellow balances violet by adding clarity, simplicity, and conscious attention. The combination connects imagination with practical awareness."
+      "צהוב מאזן את הסגול על ידי הוספת בהירות, פשטות ותשומת לב מודעת. השילוב מחבר דמיון עם מודעות מעשית."
   }
 ];
