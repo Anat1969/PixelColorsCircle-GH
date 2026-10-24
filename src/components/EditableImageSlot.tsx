@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
-import { ImagePlus, Trash2, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
+import { useEdit } from "@/state/EditContext";
 
 interface EditableImageSlotProps {
   storageKey: string;
@@ -9,96 +10,91 @@ interface EditableImageSlotProps {
 }
 
 const STORAGE_PREFIX = "editable-image-slot-";
+const MAX_SIDE = 1200;
 
-function readFileAsDataURL(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
+/** Downscale large photos before storing, so localStorage does not fill up. */
+async function fileToDataURL(file: File): Promise<string> {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const i = new Image();
+      i.onload = () => resolve(i);
+      i.onerror = reject;
+      i.src = url;
+    });
+    const scale = Math.min(1, MAX_SIDE / Math.max(img.width, img.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(img.width * scale);
+    canvas.height = Math.round(img.height * scale);
+    canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL("image/jpeg", 0.85);
+  } finally {
+    URL.revokeObjectURL(url);
+  }
 }
 
+/**
+ * Illustration slot. Visitors see the image (or a colour field).
+ * In edit mode (A&I menu) it accepts upload, drag and drop, paste, replace and remove.
+ */
 const EditableImageSlot: React.FC<EditableImageSlotProps> = ({
   storageKey,
   fallbackGradient,
   placeholderText = "תמונה להמחשה",
   className = "",
 }) => {
+  const { editing } = useEdit();
   const fullKey = STORAGE_PREFIX + storageKey;
   const [imageURL, setImageURL] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Load from localStorage
   useEffect(() => {
     try {
       const saved = localStorage.getItem(fullKey);
       if (saved) setImageURL(saved);
-    } catch {}
+    } catch {
+      /* storage unavailable */
+    }
   }, [fullKey]);
 
-  const saveImage = useCallback(
-    (dataURL: string) => {
-      setImageURL(dataURL);
-      try {
-        localStorage.setItem(fullKey, dataURL);
-      } catch {
-        // localStorage quota exceeded – still show in session
-      }
-    },
-    [fullKey]
-  );
+  const saveImage = useCallback((dataURL: string) => {
+    setImageURL(dataURL);
+    try {
+      localStorage.setItem(fullKey, dataURL);
+      toast.success("התמונה נשמרה");
+    } catch {
+      toast.error("התמונה מוצגת, אבל לא נשמרה: האחסון בדפדפן מלא. נסו תמונה קטנה יותר.");
+    }
+  }, [fullKey]);
 
   const removeImage = useCallback(() => {
     setImageURL(null);
     try {
       localStorage.removeItem(fullKey);
-    } catch {}
+    } catch {
+      /* storage unavailable */
+    }
   }, [fullKey]);
 
-  const handleFile = useCallback(
-    async (file: File) => {
-      if (!file.type.startsWith("image/")) return;
-      const dataURL = await readFileAsDataURL(file);
-      saveImage(dataURL);
-    },
-    [saveImage]
-  );
+  const handleFile = useCallback(async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      toast.error("זה לא קובץ תמונה. בחרו JPG, PNG או WEBP.");
+      return;
+    }
+    try {
+      saveImage(await fileToDataURL(file));
+    } catch {
+      toast.error("לא הצלחנו לקרוא את התמונה. נסו קובץ אחר.");
+    }
+  }, [saveImage]);
 
-  // Drag & drop
-  const onDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  }, []);
-
-  const onDragLeave = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-  }, []);
-
-  const onDrop = useCallback(
-    (e: React.DragEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsDragging(false);
-      const file = e.dataTransfer.files?.[0];
-      if (file) handleFile(file);
-    },
-    [handleFile]
-  );
-
-  // Paste
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || !editing) return;
     const onPaste = (e: ClipboardEvent) => {
-      const items = e.clipboardData?.items;
-      if (!items) return;
-      for (const item of Array.from(items)) {
+      for (const item of Array.from(e.clipboardData?.items ?? [])) {
         if (item.type.startsWith("image/")) {
           const file = item.getAsFile();
           if (file) {
@@ -111,96 +107,47 @@ const EditableImageSlot: React.FC<EditableImageSlotProps> = ({
     };
     container.addEventListener("paste", onPaste);
     return () => container.removeEventListener("paste", onPaste);
-  }, [handleFile]);
+  }, [handleFile, editing]);
 
-  // File input change
-  const onFileChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file) handleFile(file);
-      e.target.value = "";
-    },
-    [handleFile]
-  );
-
-  const openFileDialog = useCallback(() => {
-    fileInputRef.current?.click();
-  }, []);
+  const drag = editing
+    ? {
+        onDragOver: (e: React.DragEvent) => { e.preventDefault(); setIsDragging(true); },
+        onDragLeave: (e: React.DragEvent) => { e.preventDefault(); setIsDragging(false); },
+        onDrop: (e: React.DragEvent) => {
+          e.preventDefault();
+          setIsDragging(false);
+          const file = e.dataTransfer.files?.[0];
+          if (file) handleFile(file);
+        },
+      }
+    : {};
 
   return (
     <div
       ref={containerRef}
-      tabIndex={0}
-      className={`relative rounded-xl overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/20 ${className}`}
+      tabIndex={editing ? 0 : -1}
+      className={`relative overflow-hidden ${className}`}
       style={{
         background: imageURL ? undefined : fallbackGradient,
-        border: isDragging
-          ? "2px dashed rgba(255,255,255,0.5)"
-          : "1px solid rgba(255,255,255,0.06)",
+        border: isDragging ? "2px dashed rgba(255,255,255,0.6)" : "1px solid rgba(255,255,255,0.08)",
         minHeight: "7rem",
       }}
-      onDragOver={onDragOver}
-      onDragLeave={onDragLeave}
-      onDrop={onDrop}
-      onClick={!imageURL ? openFileDialog : undefined}
+      {...drag}
     >
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={onFileChange}
-      />
+      <input ref={fileInputRef} type="file" accept="image/*" className="hidden" tabIndex={-1}
+        onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = ""; }} />
 
-      {imageURL ? (
-        <>
-          <img
-            src={imageURL}
-            alt={placeholderText}
-            className="w-full h-full object-cover"
-          />
-          {/* Overlay controls on hover */}
-          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                openFileDialog();
-              }}
-              className="p-2 rounded-lg bg-white/15 hover:bg-white/25 transition-colors"
-              title="החלף תמונה"
-            >
-              <RefreshCw className="w-4 h-4 text-white" />
+      {imageURL && <img src={imageURL} alt={placeholderText} className="h-full w-full object-cover" />}
+
+      {editing && (
+        <div className={`absolute inset-0 flex flex-col items-center justify-center gap-2 p-2 ${imageURL ? "bg-black/55" : ""}`}>
+          <div className="flex flex-wrap justify-center gap-1.5">
+            <button type="button" className="btn btn-sm" onClick={() => fileInputRef.current?.click()}>
+              {imageURL ? "החלפת תמונה" : "העלאת תמונה"}
             </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                removeImage();
-              }}
-              className="p-2 rounded-lg bg-white/15 hover:bg-red-500/50 transition-colors"
-              title="הסר תמונה"
-            >
-              <Trash2 className="w-4 h-4 text-white" />
-            </button>
+            {imageURL && <button type="button" className="btn btn-sm is-danger" onClick={removeImage}>הסרה</button>}
           </div>
-        </>
-      ) : (
-        <div className="flex flex-col items-center justify-center h-full gap-1.5 py-4">
-          <ImagePlus
-            className="w-6 h-6 transition-transform group-hover:scale-110"
-            style={{ color: "hsl(var(--newton-muted))" }}
-          />
-          <span
-            className="text-xs"
-            style={{ color: "hsl(var(--newton-muted))" }}
-          >
-            {isDragging ? "שחררו כאן" : placeholderText}
-          </span>
-          <span
-            className="text-[10px] opacity-60"
-            style={{ color: "hsl(var(--newton-muted))" }}
-          >
-            גררו, הדביקו או לחצו להעלאה
-          </span>
+          <span className="text-center text-[11px] text-newton-text/80">{isDragging ? "שחררו כאן" : "או גררו, או הדביקו כשהמסגרת בפוקוס"}</span>
         </div>
       )}
     </div>

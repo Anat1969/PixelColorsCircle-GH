@@ -2,97 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/*
+  Design system: "Optical Graphite".
+  A neutral graphite surround (no hue cast) so that colour on the wheel is judged
+  without bias, following the neutral-grey viewing surround of ISO 3664.
+  Every colour token lives here. All values are HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-
-    /* Newton Color Wheel theme */
-    --newton-bg: 225 18% 7%;
-    --newton-panel: 222 20% 11%;
-    --newton-panel-2: 220 22% 16%;
-    --newton-text: 218 33% 96%;
-    --newton-muted: 214 18% 75%;
-    --newton-accent: 217 100% 76%;
+    /* Optical Graphite palette */
+    --newton-ink: 220 8% 6%;        /* deepest shadow, text on light */
+    --newton-bg: 220 6% 8%;         /* page surround */
+    --newton-panel: 220 5% 11.5%;   /* raised plane */
+    --newton-panel-2: 220 5% 16%;   /* control face */
+    --newton-line: 220 5% 24%;      /* hairlines */
+    --newton-text: 40 18% 94%;      /* chalk */
+    --newton-muted: 220 6% 72%;     /* fog, 7:1 on panel */
+    --newton-accent: 41 62% 74%;    /* lumen: warm light, the only accent */
+    --newton-ok: 145 45% 62%;
+    --newton-warn: 32 90% 66%;
+    --newton-fail: 2 80% 70%;
     --newton-mask: 0 0% 0%;
-  }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* shadcn base, aligned to the palette */
+    --background: var(--newton-bg);
+    --foreground: var(--newton-text);
+    --card: var(--newton-panel);
+    --card-foreground: var(--newton-text);
+    --popover: var(--newton-panel);
+    --popover-foreground: var(--newton-text);
+    --primary: var(--newton-accent);
+    --primary-foreground: var(--newton-ink);
+    --secondary: var(--newton-panel-2);
+    --secondary-foreground: var(--newton-text);
+    --muted: var(--newton-panel-2);
+    --muted-foreground: var(--newton-muted);
+    --accent: var(--newton-panel-2);
+    --accent-foreground: var(--newton-text);
+    --destructive: var(--newton-fail);
+    --destructive-foreground: var(--newton-ink);
+    --border: var(--newton-line);
+    --input: var(--newton-line);
+    --ring: var(--newton-accent);
+    --radius: 0px;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --font-sans: 'IBM Plex Sans Hebrew', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --spectrum: linear-gradient(90deg, #E53935, #FB8C00, #FDD835, #43A047, #1E88E5, #3949AB, #8E24AA);
+    --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --topbar-h: 64px;
   }
 }
 
@@ -101,112 +60,244 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    background: hsl(var(--newton-bg));
+    scroll-padding-top: calc(var(--topbar-h) + 16px);
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: hsl(var(--newton-accent) / 0.35);
+    color: hsl(var(--newton-text));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--newton-accent));
+    outline-offset: 2px;
   }
 }
 
-/* Newton Color Wheel custom styles */
 @layer components {
   .newton-app {
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    font-family: var(--font-sans);
     color: hsl(var(--newton-text));
+    background:
+      radial-gradient(120% 60% at 50% -10%, hsl(220 6% 15%) 0%, transparent 60%),
+      linear-gradient(180deg, hsl(var(--newton-bg)) 0%, hsl(220 7% 6%) 100%);
+    min-height: 100vh;
   }
 
+  .label-mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: hsl(var(--newton-muted));
+  }
+
+  .display {
+    font-weight: 200;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+  }
+
+  .spectrum-rule {
+    height: 2px;
+    background: var(--spectrum);
+  }
+
+  /* Raised plane: layered light from the top-left, consistent across the app. */
   .newton-panel {
-    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 22px;
-    box-shadow: 0 18px 60px rgba(0,0,0,0.35);
-    backdrop-filter: blur(10px);
+    position: relative;
+    background:
+      linear-gradient(180deg, hsl(0 0% 100% / 0.035), hsl(0 0% 100% / 0.01)),
+      hsl(var(--newton-panel));
+    border: 1px solid hsl(0 0% 100% / 0.08);
+    box-shadow:
+      0 1px 0 hsl(0 0% 100% / 0.06) inset,
+      0 2px 4px hsl(0 0% 0% / 0.25),
+      0 24px 60px -24px hsl(0 0% 0% / 0.7);
   }
 
-  .newton-chip {
-    border: 1px solid rgba(255,255,255,0.08);
-    background: hsl(var(--newton-panel-2));
-    color: hsl(var(--newton-text));
-    border-radius: 14px;
-    padding: 12px 10px;
-    cursor: pointer;
-    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
-    text-align: center;
-    font-weight: 700;
-    font-size: 0.95rem;
+  .newton-well {
+    background: hsl(var(--newton-ink) / 0.55);
+    border: 1px solid hsl(0 0% 100% / 0.06);
+    box-shadow: 0 2px 10px hsl(0 0% 0% / 0.45) inset;
   }
 
-  .newton-chip:hover {
-    transform: translateY(-1px);
-  }
-
-  .newton-chip.active {
-    background: hsl(var(--newton-accent));
-    color: #0d1320;
-    border-color: transparent;
-  }
-
-  .newton-mode-btn {
-    border: 1px solid rgba(255,255,255,0.08);
-    background: hsl(var(--newton-panel-2));
-    color: hsl(var(--newton-text));
-    border-radius: 16px;
-    padding: 12px 14px;
-    cursor: pointer;
-    font-size: 0.96rem;
-    transition: 0.18s ease;
-    min-height: 48px;
-  }
-
-  .newton-mode-btn.active {
-    background: linear-gradient(180deg, #a7c5ff, #77a5ff);
-    color: #0d1320;
-    border-color: transparent;
-    font-weight: 700;
-  }
-
-  .newton-mode-btn:hover {
-    transform: translateY(-1px);
-  }
-
-  .newton-action-btn {
-    border: 1px solid rgba(255,255,255,0.08);
-    background: hsl(var(--newton-panel-2));
-    color: hsl(var(--newton-text));
-    border-radius: 16px;
-    padding: 12px 14px;
-    cursor: pointer;
-    font-size: 0.96rem;
-    transition: 0.18s ease;
-    min-height: 48px;
-    display: flex;
+  /*
+    Buttons: square, raised, sink on press.
+    States: default, hover, active (pressed down), selected (aria-pressed / aria-current),
+    disabled, unavailable (aria-disabled). Same rules everywhere.
+  */
+  .btn {
+    position: relative;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-  }
-
-  .newton-action-btn.primary {
-    background: linear-gradient(180deg, #a7c5ff, #77a5ff);
-    color: #0d1320;
-    border-color: transparent;
-    font-weight: 700;
-  }
-
-  .newton-action-btn:hover {
-    transform: translateY(-1px);
-  }
-
-  .newton-status-card {
-    background: rgba(255,255,255,0.035);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px;
-    padding: 12px 14px;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 16px;
+    border-radius: 0;
+    border: 1px solid hsl(0 0% 100% / 0.1);
+    background: linear-gradient(180deg, hsl(220 5% 19%), hsl(220 5% 14.5%));
     color: hsl(var(--newton-text));
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    box-shadow:
+      0 1px 0 hsl(0 0% 100% / 0.08) inset,
+      0 1px 2px hsl(0 0% 0% / 0.4),
+      0 8px 18px -10px hsl(0 0% 0% / 0.8);
+    transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out),
+      background 0.18s var(--ease-out), border-color 0.18s var(--ease-out), color 0.18s;
   }
 
-  .newton-summary-card {
-    padding: 18px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
-    min-height: 200px;
+  .btn:hover:not(:disabled):not([aria-disabled='true']) {
+    transform: translateY(-2px);
+    border-color: hsl(0 0% 100% / 0.2);
+    box-shadow:
+      0 1px 0 hsl(0 0% 100% / 0.1) inset,
+      0 3px 6px hsl(0 0% 0% / 0.35),
+      0 16px 28px -12px hsl(0 0% 0% / 0.85);
+  }
+
+  .btn:active:not(:disabled):not([aria-disabled='true']) {
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px hsl(0 0% 0% / 0.6) inset;
+    transition-duration: 0.06s;
+  }
+
+  .btn[aria-pressed='true'],
+  .btn[aria-current='page'],
+  .btn.is-selected {
+    background: linear-gradient(180deg, hsl(40 18% 96%), hsl(40 10% 84%));
+    color: hsl(var(--newton-ink));
+    border-color: transparent;
+    font-weight: 500;
+  }
+
+  .btn.is-primary {
+    background: linear-gradient(180deg, hsl(41 70% 80%), hsl(38 52% 64%));
+    color: hsl(var(--newton-ink));
+    border-color: hsl(38 40% 50% / 0.6);
+    font-weight: 500;
+  }
+
+  .btn.is-quiet {
+    background: transparent;
+    box-shadow: none;
+    border-color: hsl(0 0% 100% / 0.12);
+  }
+
+  .btn.is-danger:hover:not(:disabled) {
+    color: hsl(var(--newton-fail));
+    border-color: hsl(var(--newton-fail) / 0.5);
+  }
+
+  .btn:disabled,
+  .btn[aria-disabled='true'] {
+    opacity: 0.38;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-sm {
+    min-height: 36px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  /* Clickable card: lifts on hover, sinks on press. */
+  .card-press {
+    cursor: pointer;
+    transition: transform 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out), border-color 0.22s;
+  }
+  .card-press:hover {
+    transform: translateY(-3px);
+    border-color: hsl(0 0% 100% / 0.16);
+    box-shadow:
+      0 1px 0 hsl(0 0% 100% / 0.08) inset,
+      0 6px 12px hsl(0 0% 0% / 0.3),
+      0 36px 70px -28px hsl(0 0% 0% / 0.9);
+  }
+  .card-press:active {
+    transform: translateY(0);
+  }
+
+  /* Colour swatch: square, raised; clickable ones lift. */
+  .swatch {
+    display: inline-block;
+    border-radius: 0;
+    border: 1px solid hsl(0 0% 100% / 0.18);
+    box-shadow: 0 1px 0 hsl(0 0% 100% / 0.2) inset, 0 4px 10px -4px hsl(0 0% 0% / 0.7);
+  }
+  button.swatch {
+    cursor: pointer;
+    transition: transform 0.16s var(--ease-out), box-shadow 0.16s var(--ease-out);
+  }
+  button.swatch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 1px 0 hsl(0 0% 100% / 0.2) inset, 0 10px 18px -8px hsl(0 0% 0% / 0.9);
+  }
+  button.swatch:active {
+    transform: translateY(1px);
+  }
+
+  .field {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border-radius: 0;
+    background: hsl(var(--newton-ink) / 0.6);
+    border: 1px solid hsl(0 0% 100% / 0.14);
+    color: hsl(var(--newton-text));
+    box-shadow: 0 2px 6px hsl(0 0% 0% / 0.5) inset;
+    font: inherit;
+  }
+  .field::placeholder {
+    color: hsl(var(--newton-muted) / 0.8);
+  }
+
+  /* Editable text in edit mode */
+  [data-editable='true'] {
+    outline: 1px dashed hsl(var(--newton-accent) / 0.55);
+    outline-offset: 3px;
+    cursor: text;
+  }
+  [data-editable='true']:focus {
+    outline: 2px solid hsl(var(--newton-accent));
+    background: hsl(var(--newton-accent) / 0.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print and save-as-PDF: show content that would otherwise wait for a scroll reveal. */
+@media print {
+  [style*='opacity'] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  header.fixed {
+    position: static;
   }
 }
