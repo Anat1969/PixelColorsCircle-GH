@@ -3,8 +3,10 @@
  * Pages: network first, cached copy when offline.
  * Built assets, images and fonts: cache first (their names change on every build).
  */
-const VERSION = 'pcc-v2';
-const SHELL = ['/', '/manifest.webmanifest', '/icon.svg', '/icon-192.png', '/icon-512.png'];
+const VERSION = 'pcc-v3';
+// Works at the site root (Vercel) and under a sub-path (GitHub Pages).
+const BASE = new URL(self.registration.scope).pathname;
+const SHELL = ['', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png'].map((p) => BASE + p);
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(VERSION).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -28,16 +30,16 @@ self.addEventListener('fetch', (event) => {
       fetch(req)
         .then((res) => {
           const copy = res.clone();
-          caches.open(VERSION).then((c) => c.put('/', copy));
+          caches.open(VERSION).then((c) => c.put(BASE, copy));
           return res;
         })
-        .catch(() => caches.match('/')),
+        .catch(() => caches.match(BASE)),
     );
     return;
   }
 
   const cacheable =
-    (url.origin === location.origin && (url.pathname.startsWith('/assets/') || /\.(png|svg|jpg|jpeg|webp|ico)$/.test(url.pathname))) ||
+    (url.origin === location.origin && (url.pathname.startsWith(BASE + 'assets/') || /\.(png|svg|jpg|jpeg|webp|ico)$/.test(url.pathname))) ||
     url.hostname === 'fonts.googleapis.com' ||
     url.hostname === 'fonts.gstatic.com';
   if (!cacheable) return;
