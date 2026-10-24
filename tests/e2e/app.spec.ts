@@ -180,6 +180,22 @@ test.describe("wheel", () => {
     await expect(page.getByRole("button", { name: "טעינת הפלטה כניסה לבניין" })).toHaveCount(0);
   });
 
+  test("material boards: dark and white base, grey values, grey check", async ({ page }) => {
+    const boards = page.locator("section").filter({ has: page.locator("#boards-title") });
+    await expect(boards.getByText("פתחו תאים בגלגל")).toHaveCount(2);
+    await clickCell(page, 3, 2);
+    const dark = boards.getByRole("figure", { name: "לוח 1 · בסיס כהה" });
+    const light = boards.getByRole("figure", { name: "לוח 2 · בסיס לבן" });
+    await expect(dark.getByText("צהוב · רווי")).toBeVisible();
+    await expect(dark.getByText("כל הדוגמאות בולטות מהבסיס")).toBeVisible();
+    await expect(light.getByText(/נבלעים בבסיס.*צהוב/)).toBeVisible();
+    await expect(light.getByText(/^אפור \d+$/)).toBeVisible();
+    const toggle = boards.getByRole("button", { name: "בדיקת ערכים באפור" });
+    await toggle.click();
+    await expect(boards.getByRole("button", { name: "חזרה לצבע" })).toHaveAttribute("aria-pressed", "true");
+    expect(await dark.evaluate(el => getComputedStyle(el).filter)).toContain("grayscale");
+  });
+
   test("report links each colour to its psychology page", async ({ page }) => {
     await clickCell(page, 3, 6);
     await page.getByRole("link", { name: /כחול · רווי/ }).click();

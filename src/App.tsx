@@ -32,7 +32,7 @@ const App = () => (
   <MotionConfig reducedMotion="user">
     <EditProvider>
       <Toaster />
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "") || undefined}>
         <ScrollToTop />
         <Suspense fallback={<Loading />}>
         <Routes>

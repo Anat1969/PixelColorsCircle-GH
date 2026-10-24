@@ -131,3 +131,27 @@ export function detectHarmony(cells: { ring: number; sector: number }[]): Harmon
   if (arc <= 4) return harmony('analogous');
   return harmony('polychrome');
 }
+
+/* ---------- Value: fifty greys ---------- */
+
+export const GREY_STEPS = 50;
+
+/** CIE L* (perceived lightness, 0 to 100) from sRGB. */
+export function lightness(hex: string): number {
+  const Y = relativeLuminance(hex);
+  return Y <= 216 / 24389 ? (Y * 24389) / 27 : 116 * Math.cbrt(Y) - 16;
+}
+
+/** Hex of grey step i (0 black … 49 white), evenly spaced in L*. Same values as --g0…--g49. */
+export function greyHex(step: number): string {
+  const L = (Math.max(0, Math.min(GREY_STEPS - 1, step)) / (GREY_STEPS - 1)) * 100;
+  const Y = L > 8 ? Math.pow((L + 16) / 116, 3) : (L * 27) / 24389;
+  const s = Y <= 0.0031308 ? 12.92 * Y : 1.055 * Math.pow(Y, 1 / 2.4) - 0.055;
+  const v = Math.round(Math.max(0, Math.min(1, s)) * 255);
+  return rgbToHex({ r: v, g: v, b: v });
+}
+
+/** The grey step with the same perceived lightness as a colour: its value in black and white. */
+export function greyStep(hex: string): number {
+  return Math.round((lightness(hex) / 100) * (GREY_STEPS - 1));
+}

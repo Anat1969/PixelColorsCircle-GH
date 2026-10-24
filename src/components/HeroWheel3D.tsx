@@ -46,7 +46,7 @@ export default function HeroWheel3D() {
             <RingLayer ring={ring} />
           </motion.div>
         ))}
-        <div className="absolute left-1/2 top-1/2 h-[15%] w-[15%] rounded-full bg-[#f1efe9] shadow-[0_0_40px_rgba(255,255,255,.25)]"
+        <div className="absolute left-1/2 top-1/2 h-[15%] w-[15%] rounded-full bg-white shadow-[0_0_40px_rgba(255,255,255,.25)]"
           style={{ transform: `translate(-50%, -50%) translateZ(${gap * -1.5}px)` }} aria-hidden="true" />
       </motion.div>
     </div>

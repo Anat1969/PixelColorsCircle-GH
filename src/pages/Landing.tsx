@@ -161,7 +161,7 @@ const Landing = () => {
         <ol className="grid grid-cols-[minmax(0,1fr)] gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s, i) => (
             <motion.li key={s.title} {...rise(i)} className="newton-panel relative overflow-hidden p-6">
-              <span className="absolute inset-x-0 top-0 h-[3px]" style={{ background: NEWTON_SEVEN[i * 2].hex }} aria-hidden="true" />
+              <span className="absolute inset-x-0 top-0 h-[3px]" style={{ background: `hsl(var(--g${49 - i * 10}))` }} aria-hidden="true" />
               <span className="font-mono text-4xl font-light text-newton-text/30">0{i + 1}</span>
               <h3 className="mb-2 mt-3 text-xl font-light text-newton-text">{s.title}</h3>
               <p className="text-sm leading-relaxed text-newton-muted">{s.text}</p>
@@ -180,7 +180,7 @@ const Landing = () => {
         <div className="grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {WORLD.map((w, i) => (
             <motion.div key={w.title} {...rise(i)} className="newton-panel p-5">
-              <span className="swatch mb-4 block h-2 w-10" style={{ background: newtonHex(w.key) }} aria-hidden="true" />
+              <span className="swatch mb-4 block h-2 w-10" style={{ background: `hsl(var(--g${45 - i * 7}))` }} aria-hidden="true" />
               <h3 className="mb-2 text-lg font-light text-newton-text">{w.title}</h3>
               <p className="text-sm leading-relaxed text-newton-muted">{w.text}</p>
             </motion.div>
@@ -204,7 +204,7 @@ const Landing = () => {
           <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
             {USES.map((u, i) => (
               <li key={u} className="flex items-start gap-3 text-newton-text">
-                <span className="mt-2 h-2 w-2 shrink-0" style={{ background: NEWTON_SEVEN[i % 7].hex }} aria-hidden="true" />
+                <span className="mt-2 h-2 w-2 shrink-0" style={{ background: `hsl(var(--g${49 - i * 6}))` }} aria-hidden="true" />
                 <span>{u}</span>
               </li>
             ))}

@@ -56,7 +56,7 @@ const PaletteLibrary: React.FC<Props> = ({ revealedColors, harmony, snapshot, sa
   const exportJson = () =>
     downloadFile('palette.json', JSON.stringify({
       harmony: harmony.name,
-      link: `${location.origin}/wheel?${encodeSnapshot(snapshot)}`,
+      link: `${location.origin}${import.meta.env.BASE_URL}wheel?${encodeSnapshot(snapshot)}`,
       colors: revealedColors.map(c => ({ name: c.name, ring: RING_LABELS[c.ring], hex: c.color.toUpperCase() })),
     }, null, 2));
 

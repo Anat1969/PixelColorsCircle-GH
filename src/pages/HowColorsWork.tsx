@@ -5,7 +5,6 @@ import EditableText from "@/components/EditableText";
 import PageLayout, { PageHeader } from "@/components/PageLayout";
 import { colorExplorationData, colorExplorationFunctions } from "@/data/colorExplorationData";
 import { colorExplorationLabels as labels } from "@/data/colorExplorationLabels";
-import { newtonHex, type NewtonKey } from "@/data/newton";
 import { copyText } from "@/lib/share";
 import bannerMusic from "@/assets/banner_music.jpg";
 import bannerNature from "@/assets/banner_nature.jpg";
@@ -15,13 +14,6 @@ const domainImages: Record<string, string> = {
   music: bannerMusic,
   living: bannerNature,
   physics: bannerPhysics,
-};
-
-/** Each domain takes its accent from Newton's palette, so colour meaning stays consistent. */
-const domainAccent: Record<string, NewtonKey> = {
-  music: "violet",
-  living: "green",
-  physics: "blue",
 };
 
 const { hero, domains } = colorExplorationData;
@@ -66,7 +58,6 @@ const HowColorsWork = () => {
 
       <div className="space-y-6">
         {visibleDomains.map((domain, index) => {
-          const accent = newtonHex(domainAccent[domain.key] ?? "blue");
           const isExpanded = filter !== "all" || expanded === domain.key;
           const panelId = `domain-${domain.key}`;
 
@@ -80,7 +71,7 @@ const HowColorsWork = () => {
                 className="newton-panel card-press block w-full overflow-hidden text-start">
                 <div className="flex flex-col md:h-[280px] md:flex-row">
                   <div className="flex flex-1 flex-col justify-center gap-3 p-6 md:p-8">
-                    <span className="label-mono flex items-center gap-2"><span className="h-2.5 w-2.5" style={{ background: accent }} aria-hidden="true" />0{index + 1} · {domain.shown.length} {labels.examplesTitle}</span>
+                    <span className="label-mono flex items-center gap-2"><span className="h-2.5 w-2.5 bg-newton-text" aria-hidden="true" />0{index + 1} · {domain.shown.length} {labels.examplesTitle}</span>
                     <h2 id={`${panelId}-title`} className="display text-[2rem] text-newton-text">{domain.title}</h2>
                     <EditableText id={`how.${domain.key}.intro`} as="p" className="leading-relaxed text-newton-muted">{domain.intro}</EditableText>
                     <span className="label-mono mt-1 text-newton-text">{isExpanded ? "סגירה" : "פתיחת הדוגמאות"} <span aria-hidden="true">{isExpanded ? "−" : "+"}</span></span>
@@ -88,8 +79,8 @@ const HowColorsWork = () => {
                   <div className="relative h-44 overflow-hidden md:h-auto md:w-[42%]">
                     <img src={domainImages[domain.key]} alt="" className="h-full w-full object-cover" loading="lazy" width={1024} height={512} />
                     <div className="pointer-events-none absolute inset-0"
-                      style={{ background: "linear-gradient(to left, transparent 35%, hsl(220 5% 11.5% / 0.96) 100%)" }} />
-                    <div className="absolute inset-x-0 bottom-0 h-1" style={{ background: accent }} />
+                      style={{ background: "linear-gradient(to left, transparent 35%, hsl(var(--newton-panel) / 0.96) 100%)" }} />
+                    <div className="grey-band absolute inset-x-0 bottom-0" />
                   </div>
                 </div>
               </button>

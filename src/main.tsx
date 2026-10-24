@@ -7,7 +7,7 @@ createRoot(document.getElementById("root")!).render(<App />);
 // Installable app: the service worker serves pages from the network and assets from cache.
 if ("serviceWorker" in navigator && import.meta.env.PROD) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js").catch(() => {
+    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => {
       /* offline support is optional */
     });
   });

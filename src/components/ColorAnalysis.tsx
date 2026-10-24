@@ -14,10 +14,10 @@ interface ColorAnalysisProps {
 }
 
 const LEVEL_TONE: Record<WcagLevel, string> = {
-  AAA: 'text-newton-ok',
-  AA: 'text-newton-ok',
+  AAA: 'text-newton-text font-medium',
+  AA: 'text-newton-text',
   'AA-large': 'text-newton-warn',
-  fail: 'text-newton-fail',
+  fail: 'text-newton-fail line-through decoration-1',
 };
 
 const WHITE = '#FFFFFF';
@@ -45,7 +45,7 @@ const ColorAnalysis: React.FC<ColorAnalysisProps> = ({ analysis, harmony, reveal
     <section aria-labelledby="report-title" className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="label-mono mb-2">03 · דוח הפלטה</p>
+          <p className="label-mono mb-2">04 · דוח הפלטה</p>
           <h2 id="report-title" className="display text-[1.9rem] text-newton-text">מה הבחירה אומרת</h2>
         </div>
         <p className="label-mono">שכבה 1 חישוב · שכבה 2 פרשנות · שכבה 3 מגבלות</p>

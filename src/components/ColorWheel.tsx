@@ -184,11 +184,11 @@ const ColorWheel: React.FC<ColorWheelProps> = ({
             transform: `rotate(${rotationOffset * ROTATION_STEP_DEG}deg)`,
           }}>
             <path d={cellPath(highlight.ring, highlight.sector)} fill="none"
-              stroke={focused ? 'hsl(41 62% 74%)' : 'rgba(255,255,255,0.95)'} strokeWidth={focused ? 6 : 4} />
+              stroke={focused ? '#ffffff' : 'rgba(255,255,255,0.8)'} strokeWidth={focused ? 7 : 4} strokeDasharray={focused ? undefined : "10 6"} />
           </g>
         )}
 
-        <circle cx={CENTER} cy={CENTER} r={INNER_GAP - 10} fill="#f1efe9" stroke="rgba(255,255,255,0.6)" strokeWidth="2"
+        <circle cx={CENTER} cy={CENTER} r={INNER_GAP - 10} fill="#ffffff" stroke="rgba(255,255,255,0.6)" strokeWidth="2"
           className="pointer-events-none" />
 
         {colorLabels}

@@ -15,9 +15,9 @@ export default function AppIcon({ size = 28, className }: { size?: number; class
   });
   return (
     <svg viewBox="0 0 100 100" width={size} height={size} className={className} aria-hidden="true" focusable="false">
-      <rect width="100" height="100" fill="#141518" />
+      <rect width="100" height="100" fill="#141414" />
       {paths}
-      <circle cx="50" cy="50" r={inner - 4} fill="#f1efe9" />
+      <circle cx="50" cy="50" r={inner - 4} fill="#ffffff" />
     </svg>
   );
 }
