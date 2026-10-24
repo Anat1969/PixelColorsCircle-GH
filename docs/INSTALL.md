@@ -27,7 +27,13 @@ npm run dev
 
 בדיקות הקצה לוחצות על כל כפתור, בודקות שאין גלילה אופקית, שכפתור A&I מופיע ושאין כפתורי פיתוח חופשיים בסרגל, שהשמירה עוברת רענון, שהאפליקציה ניתנת להתקנה (`Page.getInstallabilityErrors` ריק) ושהדפים עובדים עם הפחתת תנועה. עם `SHOTS_DIR=<תיקייה>` הן שומרות צילום מסך מלא של כל עמוד.
 
-## פרסום ב-Vercel (ברירת המחדל)
+## פרסום ב-GitHub Pages (פעיל)
+
+הכתובת: https://anat1969.github.io/PixelColorsCircle-GH/
+
+כל מיזוג ל-main מריץ את `.github/workflows/pages.yml`: בדיקת טיפוסים, בדיקות יחידה, בנייה עם `PAGES_BASE=/PixelColorsCircle-GH/`, ודחיפה לענף `gh-pages`. אם הכתובת לא עולה, ב-Settings, Pages בוחרים Deploy from a branch, ענף `gh-pages`, תיקייה `/ (root)`.
+
+## פרסום ב-Vercel (חלופה)
 
 1. ב-Vercel: Add New Project, ובוחרים את הריפו `Anat1969/PixelColorsCircle-GH`.
 2. Framework: Vite. Build: `npm run build`. Output: `dist`.

@@ -9,7 +9,7 @@ import { NAV_ITEMS, APP_NAME } from '@/data/site';
  */
 const TopNav = () => (
   <header dir="rtl" className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.08]"
-    style={{ background: 'linear-gradient(180deg, hsl(220 6% 9% / 0.96), hsl(220 6% 8% / 0.9))', backdropFilter: 'blur(14px)' }}>
+    style={{ background: 'linear-gradient(180deg, hsl(var(--g4) / 0.96), hsl(var(--g3) / 0.9))', backdropFilter: 'blur(14px)' }}>
     <div className="mx-auto grid max-w-[1380px] grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2 px-4 py-2.5 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-6">
       <Link to="/" className="group col-start-1 row-start-1 flex min-w-0 items-center gap-3 justify-self-start" aria-label={`${APP_NAME}, לדף הבית`}>
         <span className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden border border-white/10 shadow-[0_6px_14px_-6px_rgba(0,0,0,.9)] transition-transform duration-200 group-hover:-translate-y-0.5">
@@ -35,7 +35,7 @@ const TopNav = () => (
         <AIMenu />
       </div>
     </div>
-    <div className="spectrum-rule opacity-70" aria-hidden="true" />
+    <div className="spectrum-rule" aria-hidden="true" />
   </header>
 );
 

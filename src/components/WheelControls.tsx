@@ -29,7 +29,7 @@ const WheelControls: React.FC<WheelControlsProps> = ({
   const full = openedCount >= selectionLimit;
 
   return (
-    <aside aria-label="בקרת הגלגל" className="newton-panel p-5 md:p-6 lg:sticky lg:top-[96px] lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:max-h-[calc(100vh-112px)] lg:self-start lg:overflow-y-auto">
+    <aside aria-label="בקרת הגלגל" className="newton-panel p-5 md:p-6 lg:sticky lg:top-[96px] lg:col-start-1 lg:row-span-4 lg:row-start-1 lg:max-h-[calc(100vh-112px)] lg:self-start lg:overflow-y-auto">
       <p className="label-mono mb-3">01 · שליטה</p>
       <h2 className="display mb-3 text-[1.9rem] text-newton-text">הגדרת החקירה</h2>
       <p className="mb-2 leading-relaxed text-newton-muted">

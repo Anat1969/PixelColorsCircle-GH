@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { contrastRatio, wcagLevel, detectHarmony, sectorGaps, readableOn, mixWithWhite } from '@/lib/color';
+import { contrastRatio, wcagLevel, detectHarmony, sectorGaps, readableOn, mixWithWhite, greyHex, greyStep } from '@/lib/color';
 
 const cells = (...sectors: number[]) => sectors.map(sector => ({ ring: 3, sector }));
 
@@ -54,5 +54,22 @@ describe('Itten harmony on a 12-step wheel', () => {
   it('computes gaps that always sum to 12', () => {
     expect(sectorGaps([0, 5, 7])).toEqual([5, 2, 5]);
     expect(sectorGaps([10, 1]).reduce((a, b) => a + b, 0)).toBe(12);
+  });
+});
+
+describe('fifty greys', () => {
+  it('runs from black to white', () => {
+    expect(greyHex(0)).toBe('#000000');
+    expect(greyHex(49)).toBe('#ffffff');
+  });
+  it('matches the CSS tokens', () => {
+    expect(greyHex(3)).toBe('#141414');
+    expect(greyHex(36)).toBe('#b4b4b4');
+  });
+  it('maps every grey back to its own step', () => {
+    for (let i = 0; i < 50; i++) expect(greyStep(greyHex(i))).toBe(i);
+  });
+  it('puts yellow far lighter than blue', () => {
+    expect(greyStep('#FDD835')).toBeGreaterThan(greyStep('#1E88E5') + 10);
   });
 });
