@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -13,6 +14,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)"],
+        mono: ["var(--font-mono)"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -54,6 +59,11 @@ export default {
           text: "hsl(var(--newton-text))",
           muted: "hsl(var(--newton-muted))",
           accent: "hsl(var(--newton-accent))",
+          ink: "hsl(var(--newton-ink))",
+          line: "hsl(var(--newton-line))",
+          ok: "hsl(var(--newton-ok))",
+          warn: "hsl(var(--newton-warn))",
+          fail: "hsl(var(--newton-fail))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -95,5 +105,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

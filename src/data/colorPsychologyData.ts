@@ -1,3 +1,5 @@
+import { newtonHex, type NewtonKey } from "./newton";
+
 export interface SpectrumZone {
   key: string;
   label: string;
@@ -5,7 +7,7 @@ export interface SpectrumZone {
 }
 
 export interface ColorPsychologyStop {
-  key: string;
+  key: NewtonKey;
   name: string;
   hex: string;
   frequencyTHz: number;
@@ -46,7 +48,7 @@ export const colorPsychologySpectrumData = {
     {
       key: "red",
       name: "אדום",
-      hex: "#E53935",
+      hex: newtonHex("red"),
       frequencyTHz: 400,
       wavelengthNm: 750,
       positionPercent: 0,
@@ -58,13 +60,13 @@ export const colorPsychologySpectrumData = {
       scientificExplanation: "אדום נמצא בקצה התחתון של תחום התדרים הנראים ובאורך גל ארוך יחסית. לכן הוא נתפס כחזק, בולט ובעל נוכחות גבוהה בשדה הראייה.",
       psychologicalExplanation: "מבחינה פסיכולוגית אדום מתקשר להפעלה, הישרדות, תשוקה, כוח ואיום, ולכן הוא יכול גם לעורר וגם להעמיס.",
       balancingColorName: "ירוק",
-      balancingColorHex: "#43A047",
+      balancingColorHex: newtonHex("green"),
       balancingExplanation: "ירוק מאזֵן אדום דרך רוגע, התאוששות, נשימה רגשית ותחושת יציבות.",
     },
     {
       key: "orange",
       name: "כתום",
-      hex: "#FB8C00",
+      hex: newtonHex("orange"),
       frequencyTHz: 496,
       wavelengthNm: 605,
       positionPercent: 16.6,
@@ -76,13 +78,13 @@ export const colorPsychologySpectrumData = {
       scientificExplanation: "כתום נמצא מעל האדום בתחום התדרים הנראים ומשלב בולטות גבוהה עם תחושת מעבר לעבר אזורים בהירים יותר בספקטרום.",
       psychologicalExplanation: "מבחינה פסיכולוגית כתום מתקשר לחום, קרבה, משחקיות וביטוי, אך בעודף הוא עשוי להרגיש פולשני או חסר מנוחה.",
       balancingColorName: "כחול",
-      balancingColorHex: "#1E88E5",
+      balancingColorHex: newtonHex("blue"),
       balancingExplanation: "כחול מאזֵן כתום דרך שקט, בהירות, סדר ותחושת עומק.",
     },
     {
       key: "yellow",
       name: "צהוב",
-      hex: "#FDD835",
+      hex: newtonHex("yellow"),
       frequencyTHz: 517,
       wavelengthNm: 580,
       positionPercent: 33.3,
@@ -94,13 +96,13 @@ export const colorPsychologySpectrumData = {
       scientificExplanation: "צהוב נמצא במרכז החם של התחום הנראה, עם נראות גבוהה מאוד לעין האנושית, ולכן הוא בולט במיוחד.",
       psychologicalExplanation: "מבחינה פסיכולוגית צהוב מתקשר לחשיבה, למיקוד, ללמידה ולהבנה, אך בעודף הוא עלול לעורר עומס עצבי.",
       balancingColorName: "סגול",
-      balancingColorHex: "#8E24AA",
+      balancingColorHex: newtonHex("violet"),
       balancingExplanation: "סגול מאזֵן צהוב דרך עומק, השהיה, רפלקטיביות וריכוך החדוּת.",
     },
     {
       key: "green",
       name: "ירוק",
-      hex: "#43A047",
+      hex: newtonHex("green"),
       frequencyTHz: 566,
       wavelengthNm: 530,
       positionPercent: 50,
@@ -112,13 +114,13 @@ export const colorPsychologySpectrumData = {
       scientificExplanation: "ירוק נמצא באזור מרכזי בספקטרום הנראה, ולכן הוא נתפס כנקודת איזון ויזואלית טבעית ביחס לצבעים חמים וקרים.",
       psychologicalExplanation: "מבחינה פסיכולוגית ירוק מתקשר לטבע, ביטחון, ריפוי והתחדשות, אך בעודף הוא עלול להפוך לשאננות.",
       balancingColorName: "אדום",
-      balancingColorHex: "#E53935",
+      balancingColorHex: newtonHex("red"),
       balancingExplanation: "אדום מאזֵן ירוק דרך הנעה, דחיפות, חיות ויציאה מקיפאון.",
     },
     {
       key: "blue",
       name: "כחול",
-      hex: "#1E88E5",
+      hex: newtonHex("blue"),
       frequencyTHz: 638,
       wavelengthNm: 470,
       positionPercent: 66.6,
@@ -130,13 +132,13 @@ export const colorPsychologySpectrumData = {
       scientificExplanation: "כחול נמצא באזור תדר גבוה יותר מהירוק והצהוב, ולכן הוא קשור לחלק הקריר והעמוק יותר של הספקטרום הנראה.",
       psychologicalExplanation: "מבחינה פסיכולוגית כחול מתקשר לאמון, שקט, יציבות ומחשבה מסודרת, אך בעודף הוא עלול לדכא ספונטניות.",
       balancingColorName: "כתום",
-      balancingColorHex: "#FB8C00",
+      balancingColorHex: newtonHex("orange"),
       balancingExplanation: "כתום מאזֵן כחול דרך חום, חיבור, ספונטניות ונוכחות אנושית.",
     },
     {
       key: "indigo",
       name: "אינדיגו",
-      hex: "#3949AB",
+      hex: newtonHex("indigo"),
       frequencyTHz: 675,
       wavelengthNm: 445,
       positionPercent: 83.3,
@@ -148,13 +150,13 @@ export const colorPsychologySpectrumData = {
       scientificExplanation: "אינדיגו נמצא באזור התדרים הגבוהים של התחום הנראה, קרוב לסגול, ולכן הוא נתפס כעמוק, דחוס וקר.",
       psychologicalExplanation: "מבחינה פסיכולוגית אינדיגו מתקשר לרפלקציה, תפיסה פנימית ומשמעות, אך בעודף הוא עלול להפוך לחשוך או מרוחק.",
       balancingColorName: "צהוב",
-      balancingColorHex: "#FDD835",
+      balancingColorHex: newtonHex("yellow"),
       balancingExplanation: "צהוב מאזֵן אינדיגו דרך אור, פתיחות, קלילות וערנות מנטלית.",
     },
     {
       key: "violet",
       name: "סגול",
-      hex: "#8E24AA",
+      hex: newtonHex("violet"),
       frequencyTHz: 730,
       wavelengthNm: 410,
       positionPercent: 100,
@@ -166,7 +168,7 @@ export const colorPsychologySpectrumData = {
       scientificExplanation: "סגול נמצא בקצה העליון של תחום התדרים הנראים, סמוך לאולטרה סגול, ולכן הוא מתקשר לחוויה קצהית, עדינה ומרובת מתח תפיסתי.",
       psychologicalExplanation: "מבחינה פסיכולוגית סגול מתקשר לרוח, דמיון, שינוי ועומק רגשי, אך בעודף הוא עלול להחליש עיגון ובהירות.",
       balancingColorName: "צהוב",
-      balancingColorHex: "#FDD835",
+      balancingColorHex: newtonHex("yellow"),
       balancingExplanation: "צהוב מאזֵן סגול דרך פשטות, בהירות, מודעות וקרקוע.",
     },
   ] as ColorPsychologyStop[],

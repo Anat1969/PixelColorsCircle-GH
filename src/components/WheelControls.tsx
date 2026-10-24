@@ -1,9 +1,8 @@
 import React from 'react';
-import { RotateCcw, RotateCw, RefreshCw, Sparkles, Undo2 } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
-import {
-  NEWTON_SEVEN, MODE_DESCRIPTIONS, type SelectionMode,
-} from '@/hooks/useColorWheel';
+import { MODE_DESCRIPTIONS, MODE_LABELS, type SelectionMode } from '@/hooks/useColorWheel';
+import { MODES } from '@/lib/wheelState';
+import { NEWTON_SEVEN } from '@/data/newton';
 
 interface WheelControlsProps {
   selectionLimit: number;
@@ -12,6 +11,7 @@ interface WheelControlsProps {
   structureName: string;
   historyLength: number;
   maskOpacity: number;
+  rotationOffset: number;
   onChangeLimit: (n: number) => void;
   onSetMode: (m: SelectionMode) => void;
   onRotateForward: () => void;
@@ -22,121 +22,91 @@ interface WheelControlsProps {
   onMaskOpacityChange: (v: number) => void;
 }
 
-const modes: { key: SelectionMode; label: string }[] = [
-  { key: 'any', label: 'בחירה חופשית' },
-  { key: 'sameRing', label: 'אותה טבעת' },
-  { key: 'sameSector', label: 'אותו פלח' },
-  { key: 'symmetric', label: 'סימטריה' },
-];
-
 const WheelControls: React.FC<WheelControlsProps> = ({
-  selectionLimit, mode, openedCount, structureName, historyLength, maskOpacity,
+  selectionLimit, mode, openedCount, structureName, historyLength, maskOpacity, rotationOffset,
   onChangeLimit, onSetMode, onRotateForward, onRotateBack, onReset, onNewPattern, onUndo, onMaskOpacityChange,
 }) => {
+  const full = openedCount >= selectionLimit;
+
   return (
-    <aside className="newton-panel p-5 lg:sticky lg:top-5 space-y-0">
-      <h1 className="text-[1.9rem] leading-tight font-bold m-0 mb-2 text-newton-text">
-        גלגל הצבעים של ניוטון
-      </h1>
-      <p className="text-newton-muted leading-relaxed text-[0.98rem] mb-5">
-        שכבה תחתונה קבועה של צבעי ניוטון, ושכבה עליונה דינמית של מסכה שחורה חצי־שקופה.
-        כל תא לחיץ: פתיחה חושפת צבע, סיבוב שומר על התבנית ומחליף את הקומבינציה.
+    <aside aria-label="בקרת הגלגל" className="newton-panel p-5 md:p-6 lg:sticky lg:top-[96px] lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:max-h-[calc(100vh-112px)] lg:self-start lg:overflow-y-auto">
+      <p className="label-mono mb-3">01 · שליטה</p>
+      <h2 className="display mb-3 text-[1.9rem] text-newton-text">הגדרת החקירה</h2>
+      <p className="mb-2 leading-relaxed text-newton-muted">
+        שכבה תחתונה קבועה של צבעי ניוטון, ושכבה עליונה של מסכה שחורה חצי־שקופה.
+        כל תא לחיץ: פתיחה חושפת צבע, וסיבוב שומר על התבנית ומחליף את הקומבינציה.
       </p>
 
-      {/* Selection limit */}
-      <Section label="מספר בחירות מותר">
-        <div className="grid grid-cols-4 gap-2.5">
+      <Section label="מספר בחירות מותר" id="limit">
+        <div role="group" aria-labelledby="limit" className="grid grid-cols-7 gap-1.5">
           {[1, 2, 3, 4, 5, 6, 7].map(n => (
-            <button key={n}
-              onClick={() => onChangeLimit(n)}
-              className={`newton-chip ${n === selectionLimit ? 'active' : ''}`}>
+            <button key={n} type="button" onClick={() => onChangeLimit(n)} aria-pressed={n === selectionLimit}
+              aria-label={`${n} בחירות`} className="btn min-w-0 px-0 font-mono">
               {n}
             </button>
           ))}
         </div>
-        <p className="text-sm text-newton-muted leading-relaxed mt-2.5">
-          לאחר שמגיעים למכסה, אפשר לסובב, לאפס, או לבחור מצב עבודה חדש.
-        </p>
+        <Hint>שם המבנה: <strong className="font-medium text-newton-text">{structureName}</strong>. לאחר שמגיעים למכסה, אפשר לסובב, לאפס או לבחור מצב עבודה חדש.</Hint>
       </Section>
 
-      {/* Mode selection */}
-      <Section label="אפשרות לבחירה חדשה">
-        <div className="grid grid-cols-2 gap-2.5">
-          {modes.map(m => (
-            <button key={m.key}
-              onClick={() => onSetMode(m.key)}
-              className={`newton-mode-btn ${mode === m.key ? 'active' : ''}`}>
-              {m.label}
+      <Section label="אפשרות לבחירה חדשה" id="mode">
+        <div role="group" aria-labelledby="mode" className="grid grid-cols-2 gap-1.5">
+          {MODES.map(m => (
+            <button key={m} type="button" onClick={() => onSetMode(m)} aria-pressed={mode === m} className="btn">
+              {MODE_LABELS[m]}
             </button>
           ))}
         </div>
-        <p className="text-sm text-newton-muted leading-relaxed mt-2.5">
-          {MODE_DESCRIPTIONS[mode]}
-        </p>
+        <Hint>{MODE_DESCRIPTIONS[mode]} החלפת מצב מנקה את הבחירה.</Hint>
       </Section>
 
-      {/* Actions */}
-      <Section label="פעולות">
-        <div className="grid grid-cols-2 gap-2.5">
-          <button className="newton-action-btn primary" onClick={onRotateForward}>
-            <RotateCw className="inline w-4 h-4 ml-1" /> סיבוב +1
-          </button>
-          <button className="newton-action-btn" onClick={onRotateBack}>
-            <RotateCcw className="inline w-4 h-4 ml-1" /> סיבוב -1
-          </button>
-          <button className="newton-action-btn" onClick={onReset}>
-            <RefreshCw className="inline w-4 h-4 ml-1" /> איפוס חורים
-          </button>
-          <button className="newton-action-btn" onClick={onNewPattern}>
-            <Sparkles className="inline w-4 h-4 ml-1" /> בחירה חדשה
-          </button>
+      <Section label="פעולות" id="actions">
+        <div className="grid grid-cols-2 gap-1.5">
+          <button type="button" className="btn is-primary" onClick={onRotateForward}>סיבוב עם השעון</button>
+          <button type="button" className="btn" onClick={onRotateBack}>סיבוב נגד השעון</button>
+          <button type="button" className="btn" onClick={onReset} disabled={openedCount === 0}>איפוס חורים</button>
+          <button type="button" className="btn" onClick={onNewPattern} disabled={openedCount === 0 && rotationOffset === 0}>בחירה חדשה</button>
+          <button type="button" className="btn col-span-2" onClick={onUndo} disabled={historyLength === 0}>ביטול פעולה אחרונה</button>
         </div>
-        {historyLength > 0 && (
-          <button className="newton-action-btn mt-2.5 w-full" onClick={onUndo}>
-            <Undo2 className="inline w-4 h-4 ml-1" /> ביטול פעולה אחרונה
-          </button>
-        )}
+        <Hint>סיבוב מזיז את המסכה בפלח אחד (30°). איפוס מנקה חורים, ובחירה חדשה מחזירה גם את הסיבוב לאפס.</Hint>
       </Section>
 
-      {/* Mask opacity */}
-      <Section label={`שקיפות מסכה: ${maskOpacity}%`}>
-        <Slider
-          value={[maskOpacity]}
-          onValueChange={([v]) => onMaskOpacityChange(v)}
-          min={0}
-          max={100}
-          step={1}
-          className="w-full"
-        />
-        <p className="text-sm text-newton-muted leading-relaxed mt-2.5">
-          הורדת השקיפות חושפת את הצבעים מתחת למסכה ומאפשרת לראות ניגודיות בין הבחירות.
-        </p>
+      <Section label={`שקיפות המסכה · ${maskOpacity}%`} id="mask">
+        <Slider value={[maskOpacity]} onValueChange={([v]) => onMaskOpacityChange(v)}
+          min={0} max={100} step={1} label="שקיפות המסכה" valueText={`${maskOpacity} אחוז`} className="w-full py-2" />
+        <Hint>הורדת השקיפות חושפת את הצבעים מתחת למסכה ומאפשרת לראות ניגודיות בין הבחירות.</Hint>
       </Section>
 
-      {/* Status */}
-      <Section label="">
-        <div className="space-y-2.5">
-          <div className="newton-status-card">
-            <strong className="block mb-1">מצב נוכחי</strong>
-            <span>נבחרו {openedCount} מתוך {selectionLimit} תאים.</span>
-          </div>
-          <div className="newton-status-card">
-            <strong className="block mb-1">שם המבנה</strong>
-            <span>{structureName}</span>
-          </div>
+      <Section label="מצב נוכחי" id="status">
+        <div className="newton-well flex items-baseline justify-between gap-3 px-4 py-3" role="status" aria-live="polite">
+          <span>נבחרו <strong className="font-mono font-medium">{openedCount}</strong> מתוך <strong className="font-mono font-medium">{selectionLimit}</strong></span>
+          <span className="label-mono">{full ? 'המכסה מלאה' : `נותרו ${selectionLimit - openedCount}`} · סיבוב {rotationOffset * 30}°</span>
         </div>
+        <div className="mt-4 grid grid-cols-7 gap-1" aria-label="מקרא: שבעת צבעי ניוטון">
+          {NEWTON_SEVEN.map(c => (
+            <div key={c.key} className="min-w-0 text-center">
+              <span className="swatch block h-5 w-full" style={{ background: c.hex }} />
+              <span className="mt-1 block truncate text-[11px] text-newton-muted">{c.name}</span>
+            </div>
+          ))}
+        </div>
+        <Hint>מקלדת: Tab לגלגל, חצים ימינה ושמאלה בין גוונים, למעלה ולמטה בין טבעות, Enter לפתיחה.</Hint>
       </Section>
     </aside>
   );
 };
 
-function Section({ label, children }: { label: string; children: React.ReactNode }) {
+function Section({ label, id, children }: { label: string; id: string; children: React.ReactNode }) {
   return (
-    <div className="py-4 border-t border-white/[0.08] first:border-t-0">
-      {label && <label className="block text-sm text-newton-muted mb-2.5">{label}</label>}
+    <div className="border-t border-white/[0.08] py-4 first-of-type:border-t-0">
+      <h3 id={id} className="label-mono mb-2.5">{label}</h3>
       {children}
     </div>
   );
+}
+
+function Hint({ children }: { children: React.ReactNode }) {
+  return <p className="mt-2.5 text-sm leading-relaxed text-newton-muted">{children}</p>;
 }
 
 export default React.memo(WheelControls);
