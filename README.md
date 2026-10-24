@@ -1,24 +1,33 @@
-# Pixel Perfect Preview
+# תורת הצבע — כלי עבודה למעצבים
 
-Implement exactly the screenshot and nothing else
+אפליקציית ווב בעברית (RTL) ללימוד, הבנה ויישום של תורת הצבע: גלגל הצבעים של ניוטון, פסיכולוגיית הצבעים לאורך הספקטרום, ואיך צבעים פועלים בטבע, במוזיקה ובפיזיקה.
 
-This project was built with [Lovable](https://lovable.dev).
+## עמודים
 
-## Build with Lovable
+| כתובת | עמוד | תיאור |
+|---|---|---|
+| `/` | תורת הצבע (דף הבית) | דף נחיתה: ערך, איך זה עובד, צבע בעולם, יישום למעצבים |
+| `/color-psychology` | פסיכולוגיית הצבעים | ספקטרום רציף מאינפרא־אדום עד אולטרה־סגול, עם 7 נקודות עצירה ומשמעויות |
+| `/how-colors-work` | ציר צבעים עובדים | שלושה תחומים (מוזיקה, טבע חי, פיזיקה) עם כרטיסי דוגמה ומשבצות תמונה ניתנות לעריכה |
+| `/wheel` | גלגל הצבעים | גלגל ניוטון אינטראקטיבי עם מסכה שחורה, חשיפת תאים, מצבי בחירה, סיבוב ושקיפות |
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/cc2a6b43-abc6-4b2f-bfdf-4daa7230ae3a).
+## טכנולוגיות
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+React 18 · TypeScript · Vite 5 · Tailwind CSS · shadcn/ui · React Router · Vitest
 
-## Development
+## התחלה מהירה
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+```bash
+npm install
 npm run dev
 ```
+
+האפליקציה תיפתח בכתובת `http://localhost:8080`.
+
+מסמכים נוספים:
+- [הוראות התקנה והרצה](docs/INSTALL.md)
+- [מבנה הקוד](docs/ARCHITECTURE.md)
+
+## רישיון
+
+כל הזכויות שמורות לבעלת הפרויקט.
